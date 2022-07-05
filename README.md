@@ -1,4 +1,4 @@
-<p align="center"><img src="./animation.gif" /></p>
+<p align="center"><img src="./animation.gif" /><br>Easy-to-use fun plugin that just adds ability to... spit :3</p>
 
 # How to spit?
 Just use `/funnyspits spit` command!
@@ -19,7 +19,9 @@ Message that shows up if player doesn't have specified earlier permission, but t
 Set to `true` if you want sound of llama spit to be played near the location of where the player has spat at else set to `false`.
 
 ## `spit_intensity`:
-Intensity value of "spit" (number), value is required to be in the interval of numbers from 1 to 10.
+Intensity value of "spit" (number), value is required to be in the interval of numbers from 1 to 10. This animation will accuratly show you the difference:
+
+<p align="center"><img src="./intensity_animation.gif" /> </p>
 
 ## `reload_command_permission`:
 Permission for that player to be able to run plugin config reload command.
