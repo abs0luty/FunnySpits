@@ -1,0 +1,25 @@
+# If the permission is required to run "spit" command
+# you must paste the permission in the value
+# (if the permission is not required set the value to '')
+spit_command_permission: 'funnyspits.use'
+
+# If the permission is required to run the command
+# and the player entered it without the permission
+# the message will be shown to him.
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cYou do not have the permission to "spit"'
+
+# If you want to play sound when "spitting"
+spit_with_sound: true
+
+# Values from (1-10)
+# Recommended: 1
+spit_intensity: 1
+
+reload_command_permission: 'funnyspits.reload'
+
+reload_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cYou do not have the permission to reload the plugin'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aSuccessfully reloaded the plugin'
