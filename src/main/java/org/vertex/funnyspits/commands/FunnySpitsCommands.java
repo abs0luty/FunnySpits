@@ -20,7 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package org.vertex.funnyspits.commands;
@@ -53,8 +52,7 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
             if (args[0].equals("spit")) {
                 if (!(sender instanceof Player)) return false;
 
-                Player player = (Player) sender;
-                return Spit.spit(player);
+                return Spit.spit((Player) sender);
             } else if (args[0].equals("reload")) {
                 boolean ableToReload = false;
                 if (sender instanceof ConsoleCommandSender) ableToReload = true;
