@@ -24,7 +24,7 @@ Intensity value of "spit" (number), value is required to be in the interval of n
 
 <p align="center"><img src="./intensity_animation.gif" /> </p>
 
-## `spit_damage`
+## `spit_damage`:
 Damage that will be inflicted on the player/mob when spitting.
 
 ## `reload_command_permission`:
