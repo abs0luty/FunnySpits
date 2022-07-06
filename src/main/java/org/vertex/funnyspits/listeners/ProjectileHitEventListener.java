@@ -12,7 +12,10 @@ public class ProjectileHitEventListener implements Listener {
     public void onProjectileHitEvent(ProjectileHitEvent event) {
         if (event.getEntity().getShooter() instanceof Player) {
             event.setCancelled(true);
-            ((LivingEntity) event.getHitEntity()).damage(
+            LivingEntity entity = (LivingEntity) event.getHitEntity();
+            if (entity == null) return;
+
+            entity.damage(
                     FunnySpits.configuration.getDouble("spit_damage")
             );
         }
