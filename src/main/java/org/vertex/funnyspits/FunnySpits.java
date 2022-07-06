@@ -1,9 +1,11 @@
 package org.vertex.funnyspits;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.commands.FunnySpitsCommands;
 import org.vertex.funnyspits.commands.SpitCommand;
+import org.vertex.funnyspits.listeners.ProjectileHitEventListener;
 
 public final class FunnySpits extends JavaPlugin {
     public static FileConfiguration configuration;
@@ -21,6 +23,9 @@ public final class FunnySpits extends JavaPlugin {
 
         new FunnySpitsCommands(this);
         new SpitCommand(this);
+
+        PluginManager manager = getServer().getPluginManager();
+        manager.registerEvents(new ProjectileHitEventListener(), this);
     }
 
     @Override

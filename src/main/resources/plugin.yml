@@ -5,6 +5,7 @@ api-version: 1.16
 prefix: FunnySpits
 authors: [ VertexGMD ]
 description: Simple plugin for spits.... bruh
+java-version:
 
 commands:
   funnyspits:

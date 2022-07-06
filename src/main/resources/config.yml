@@ -1,25 +1,32 @@
-# If the permission is required to run "spit" command
-# you must paste the permission in the value
-# (if the permission is not required set the value to '')
+# If you want only players who have the specific permission to be able
+# to "spit", change the parameter's value to that specific permission. If
+# you want everybody to be able to "spit", then set its value to ''.
 spit_command_permission: 'funnyspits.use'
 
-# If the permission is required to run the command
-# and the player entered it without the permission
-# the message will be shown to him.
+# Message that shows up if player doesn't have specified earlier
+# permission, but tries to run the spit command.
 spit_command_not_enough_permissions_message:
   '&f[&eFunnySpits&f] &cYou do not have the permission to "spit"'
 
-# If you want to play sound when "spitting"
+# Set to true if you want sound of llama spit to be played near the location
+# of where the player has spat at else set to false.
 spit_with_sound: true
 
-# Values from (1-10)
-# Recommended: 1
+# Intensity value of "spit" (number), value is required to be in the
+# interval of numbers from 1 to 10.
 spit_intensity: 1
 
+# damage that will be inflicted on the player/mob when spitting
+spit_damage: 0
+
+# Permission for that player to be able to run plugin config reload command.
 reload_command_permission: 'funnyspits.reload'
 
+# Message that shows up if player doesn't have specified earlier permission,
+# but tries to run the reload command.
 reload_command_not_enough_permissions_message:
   '&f[&eFunnySpits&f] &cYou do not have the permission to reload the plugin'
 
+# Message that shows up if plugin was reloaded successfully.
 reload_command_success_message:
   '&f[&eFunnySpits&f] &aSuccessfully reloaded the plugin'
