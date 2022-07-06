@@ -2,7 +2,7 @@
 
 # How to spit?
 Just use `/funnyspits spit` command! You can also use `/spit`,
-which is more to type :3.
+which is more faster to type :3.
 
 # Configuration
 The configuration file is only one and called `config.yml`.
