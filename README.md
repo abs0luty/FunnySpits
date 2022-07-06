@@ -25,7 +25,18 @@ Intensity value of "spit" (number), value is required to be in the interval of n
 <p align="center"><img src="./intensity_animation.gif" /> </p>
 
 ## `spit_damage`:
-Damage that will be inflicted on the player/mob when spitting.
+Damage that will be inflicted on the player/mob if it was spat.
+Must be set to 0 if you want next option to come in place
+(if the option has a value of true)!
+
+## `spit_kill`:
+Kills player/mob if it was spat if the value is true.
+
+## `spit_command_cooldown`:
+Spit command cooldown (if value is zero, cooldown is cancelled).
+
+## `spit_command_cooldown_not_over_message`:
+Message shown when cooldown is not over.
 
 ## `reload_command_permission`:
 Permission for that player to be able to run plugin config reload command.
