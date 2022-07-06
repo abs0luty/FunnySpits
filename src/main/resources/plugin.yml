@@ -1,7 +1,7 @@
 name: FunnySpits
 version: '${project.version}'
 main: org.vertex.funnyspits.FunnySpits
-api-version: 1.17
+api-version: 1.16
 prefix: FunnySpits
 authors: [ VertexGMD ]
 description: Simple plugin for spits.... bruh
@@ -9,3 +9,5 @@ description: Simple plugin for spits.... bruh
 commands:
   funnyspits:
     description: 'Commands for FunnySpits'
+  spit:
+    description: 'Shortcut for /funnyspits spit'
