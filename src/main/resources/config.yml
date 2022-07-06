@@ -16,7 +16,7 @@ spit_with_sound: true
 # interval of numbers from 1 to 10.
 spit_intensity: 1
 
-# damage that will be inflicted on the player/mob when spitting
+# Damage that will be inflicted on the player/mob when spitting.
 spit_damage: 0
 
 # Permission for that player to be able to run plugin config reload command.
