@@ -21,13 +21,13 @@ spit_intensity: 1
 # (if the option has a value of true)!
 spit_damage: 0
 
-# Kills player/mob if it was spat if the value is true
+# Kills player/mob if it was spat if the value is true.
 spit_kill: false
 
-# Spit command cooldown (if value is zero, cooldown is cancelled)
+# Spit command cooldown (if value is zero, cooldown is cancelled).
 spit_command_cooldown: 5
 
-# Message shown when cooldown is not over
+# Message shown when cooldown is not over.
 spit_command_cooldown_not_over_message:
   '&f[&eFunnySpits&f] &cOops cooldown is not over, it is only about to wait for %d seconds!'
 
