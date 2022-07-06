@@ -1,4 +1,4 @@
-<p align="center"><img src="./animation.gif" /><br>Easy-to-use fun plugin that just adds ability to... spit :3</p>
+<p align="center"><img src="./main_animation.gif" /><br>Easy-to-use fun plugin that just adds ability to... spit :3</p>
 
 # How to spit?
 Just use `/funnyspits spit` command! You can also use `/spit`,
