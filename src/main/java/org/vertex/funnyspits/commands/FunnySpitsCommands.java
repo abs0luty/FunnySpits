@@ -73,6 +73,7 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                     }
                     return false;
                 } else {
+                    plugin.saveDefaultConfig();
                     plugin.reloadConfig();
                     FunnySpits.configuration = plugin.getConfig();
                 }

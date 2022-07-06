@@ -22,31 +22,29 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.listeners;
+package org.vertex.funnyspits.storage;
 
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.vertex.funnyspits.FunnySpits;
 
-public class ProjectileHitEventListener implements Listener {
-    @EventHandler
-    public void onProjectileHitEvent(ProjectileHitEvent event) {
-        if (event.getEntity().getShooter() instanceof Player) {
-            event.setCancelled(true);
-            LivingEntity entity = (LivingEntity) event.getHitEntity();
-            if (entity == null) return;
+public class CooldownValuesStorageColumn {
+    private Player player;
+    private long lastSpitCommandUsageTime;
 
-            double damage = FunnySpits.configuration.getDouble("spit_damage");
-            if (damage != 0) {
-                entity.damage(damage);
-            } else {
-                if (FunnySpits.configuration.getBoolean("spit_kill")) {
-                    entity.setHealth(0);
-                }
-            }
-        }
+    public CooldownValuesStorageColumn(Player player,
+                                       long lastSpitCommandUsageTime) {
+        this.player = player;
+        this.lastSpitCommandUsageTime = lastSpitCommandUsageTime;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public long getLastSpitCommandUsageTime() {
+        return lastSpitCommandUsageTime;
+    }
+
+    public void setLastSpitCommandUsageTime(long lastSpitCommandUsageTime) {
+        this.lastSpitCommandUsageTime = lastSpitCommandUsageTime;
     }
 }

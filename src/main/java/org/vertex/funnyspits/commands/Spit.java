@@ -30,11 +30,29 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.vertex.funnyspits.FunnySpits;
+import org.vertex.funnyspits.storage.CooldownValuesStorage;
 
+import java.time.LocalTime;
 import java.util.Iterator;
 
 public class Spit {
     public static boolean spit(Player player) {
+        long cooldownTime = FunnySpits.configuration.getLong(
+                "spit_command_cooldown");
+
+        if (CooldownValuesStorage.playerRegistered(player) && cooldownTime != 0) {
+            long lastUsageTime = CooldownValuesStorage.getPlayerCommandUsageTime(
+                    player);
+            long timeSinceLastUsageTime = (System.currentTimeMillis() / 1000)
+                    - lastUsageTime;
+            if (timeSinceLastUsageTime < cooldownTime) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        String.format(FunnySpits.configuration.getString(
+                        "spit_command_cooldown_not_over_message"), cooldownTime - timeSinceLastUsageTime)));
+                return false;
+            }
+        }
+
         if (!player.hasPermission(
                 FunnySpits.configuration.getString("spit_command_permission")
         )) {
@@ -61,6 +79,12 @@ public class Spit {
                         Sound.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
             }
         }
+
+        if (cooldownTime != 0) {
+            CooldownValuesStorage.setCommandUsageTime(player,
+                    System.currentTimeMillis() / 1000);
+        }
+
         return false;
     }
 }
