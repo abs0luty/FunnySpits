@@ -75,7 +75,7 @@ public class Spit {
                  Bukkit.getOnlinePlayers().iterator(); onlinePlayersIterator
                          .hasNext(); ) {
                 onlinePlayer = onlinePlayersIterator.next();
-                onlinePlayer.playSound(onlinePlayer.getLocation(),
+                onlinePlayer.playSound(player.getLocation(),
                         Sound.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
             }
         }
