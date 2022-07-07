@@ -30,12 +30,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.commands.FunnySpitsCommands;
 import org.vertex.funnyspits.commands.SpitCommand;
 import org.vertex.funnyspits.listeners.ProjectileHitEventListener;
+import update_checker.UpdateChecker;
 
 public final class FunnySpits extends JavaPlugin {
     public static FileConfiguration configuration;
 
     @Override
     public void onEnable() {
+        new UpdateChecker(this, 103160).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("\u001B[32mPlugin is up to date!\u001B[37m");
+            } else {
+                getLogger().info("\u001B[31mThere is a new update available. " +
+                        "It is recommended to download it!\u001B[37m");
+            }
+        });
+
         saveDefaultConfig();
 
         configuration = getConfig();
