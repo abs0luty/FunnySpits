@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.commands;
+package org.vertex.funnyspits.logic.spit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,9 +30,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.storage.CooldownValuesStorage;
+import org.vertex.funnyspits.logic.storage.CooldownValuesStorage;
 
-import java.time.LocalTime;
 import java.util.Iterator;
 
 public class Spit {

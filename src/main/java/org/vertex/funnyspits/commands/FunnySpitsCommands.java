@@ -24,16 +24,13 @@
 
 package org.vertex.funnyspits.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.command.*;
-import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.util.StringUtil;
 import org.vertex.funnyspits.FunnySpits;
+import org.vertex.funnyspits.logic.spit.AutoSpit;
+import org.vertex.funnyspits.logic.spit.Spit;
 
 import java.util.*;
 
@@ -87,6 +84,15 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                 }
                 return true;
             }
+        } else if (args.length == 2) {
+            if (args[0].equals("autospit") && FunnySpits.configuration
+                    .getBoolean("autospit_enabled")) {
+                if (!(sender instanceof Player)) return false;
+
+                Player player = (Player) sender;
+                if (args[1].equals("on")) return AutoSpit.on(player);
+                if (args[1].equals("off")) return AutoSpit.off(player);
+            }
         }
 
         return false;
@@ -98,8 +104,37 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
         List<String> completions = new ArrayList<>();
         if (args.length == 1)
         {
+            ArrayList<String> completionsList = new ArrayList<>();
+
+            if (sender instanceof Player) {
+                Player player = ((Player) sender);
+
+                if (player.hasPermission(FunnySpits.configuration
+                        .getString("spit_command_permission")))
+                    completionsList.add("spit");
+
+                if (player.hasPermission(FunnySpits.configuration
+                        .getString("reload_command_permission")))
+                    completionsList.add("reload");
+
+                if (FunnySpits.configuration.getBoolean("autospit_enabled") &&
+                        player.hasPermission(FunnySpits.configuration
+                                .getString("spit_command_permission")))
+                    completionsList.add("autospit");
+            } else if (sender instanceof ConsoleCommandSender) {
+                completionsList.add("reload");
+            }
+
             StringUtil.copyPartialMatches(
-                    args[0], Arrays.asList(new String[]{"spit", "reload"}),
+                    args[0], completionsList,
+                    completions);
+            Collections.sort(completions);
+            return completions;
+        } else if (args.length == 2 && FunnySpits.configuration.getBoolean(
+                "autospit_enabled")) {
+            StringUtil.copyPartialMatches(
+                    args[1], Arrays.asList(
+                            new String[]{"on", "off"}),
                     completions);
             Collections.sort(completions);
             return completions;

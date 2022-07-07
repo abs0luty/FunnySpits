@@ -22,46 +22,46 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.storage;
+package org.vertex.funnyspits.logic.storage;
 
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CooldownValuesStorage {
-    private static List<CooldownValuesStorageColumn> columns = new ArrayList<>();
+public class AutoSpitValuesStorage {
+    private static List<AutoSpitValuesStorageColumn> columns = new ArrayList<>();
 
     public static boolean playerRegistered(Player player) {
-        for (CooldownValuesStorageColumn column: columns) {
+        for (AutoSpitValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) return true;
         }
 
         return false;
     }
 
-    public static long getPlayerCommandUsageTime(Player player) {
-        for (CooldownValuesStorageColumn column: columns) {
+    public static boolean getAutoSpitEnabled(Player player) {
+        for (AutoSpitValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
-                return column.getLastSpitCommandUsageTime();
+                return column.getEnabled();
             }
         }
 
-        return 0;
+        return false;
     }
 
-    public static void addPlayerCommandUsageTime(Player player, long time) {
-        columns.add(new CooldownValuesStorageColumn(player, time));
+    private static void addColumn(Player player, boolean enabled) {
+        columns.add(new AutoSpitValuesStorageColumn(player, enabled));
     }
 
-    public static void setCommandUsageTime(Player player, long time) {
+    public static void setAutoSpitEnabled(Player player, boolean enabled) {
         if (!playerRegistered(player)) {
-            addPlayerCommandUsageTime(player, time);
+            addColumn(player, enabled);
         }
 
-        for (CooldownValuesStorageColumn column: columns) {
+        for (AutoSpitValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
-                column.setLastSpitCommandUsageTime(time);
+                column.setEnabled(enabled);
             }
         }
     }

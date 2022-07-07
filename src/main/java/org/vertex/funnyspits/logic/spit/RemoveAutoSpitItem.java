@@ -22,25 +22,20 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.commands;
+package org.vertex.funnyspits.logic.spit;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.spit.Spit;
+import org.bukkit.inventory.ItemStack;
 
-public class SpitCommand implements CommandExecutor {
-    public SpitCommand(FunnySpits plugin) {
-        plugin.getCommand("spit").setExecutor(this);
-    }
+public class RemoveAutoSpitItem {
+    public static void remove(Player player) {
+        for (ItemStack item: player.getInventory()) {
+            if (item == null) continue;
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command,
-                             String label, String[] args) {
-        if (!(sender instanceof Player)) return false;
+            if (!CheckAutoSpitItem.check(item)) continue;
 
-        return Spit.spit((Player) sender);
+            player.getInventory().remove(item);
+            return;
+        }
     }
 }

@@ -27,6 +27,16 @@ spit_kill: false
 # Spit command cooldown (if value is zero, cooldown is cancelled).
 spit_command_cooldown: 5
 
+# If villager was spat he will head shake
+spit_villager_interaction: true
+
+# If bell was spat it will be rung
+spit_bell_interaction: true
+
+spit_sponge_interaction: true
+
+autospit_enabled: true
+
 # Message shown when cooldown is not over.
 spit_command_cooldown_not_over_message:
   '&f[&eFunnySpits&f] &cOops cooldown is not over, it is only about to wait for %d seconds!'

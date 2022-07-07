@@ -22,25 +22,24 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.commands;
+package org.vertex.funnyspits.logic.spit;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.spit.Spit;
 
-public class SpitCommand implements CommandExecutor {
-    public SpitCommand(FunnySpits plugin) {
-        plugin.getCommand("spit").setExecutor(this);
-    }
+public class CheckAutoSpitItem {
+    public static boolean check(ItemStack item) {
+        if (Material.matchMaterial(FunnySpits.configuration.getString(
+                "autospit_item_type")) != item.getType()) return false;
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command,
-                             String label, String[] args) {
-        if (!(sender instanceof Player)) return false;
+        if (!item.hasItemMeta()) return false;
+        if (!item.getItemMeta().hasDisplayName()) return false;
 
-        return Spit.spit((Player) sender);
+        return item.getItemMeta().getDisplayName().equals(
+                ChatColor.translateAlternateColorCodes('&',
+                        FunnySpits.configuration
+                                .getString("autospit_item_name")));
     }
 }

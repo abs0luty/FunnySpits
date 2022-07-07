@@ -22,25 +22,25 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.commands;
+package org.vertex.funnyspits.listeners;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.vertex.funnyspits.FunnySpits;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.vertex.funnyspits.logic.spit.Spit;
+import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorage;
 
-public class SpitCommand implements CommandExecutor {
-    public SpitCommand(FunnySpits plugin) {
-        plugin.getCommand("spit").setExecutor(this);
-    }
+public class LMBEventListener implements Listener {
+    @EventHandler
+    public void onRMB(PlayerInteractEvent event) {
+        if (event.getAction() != Action.LEFT_CLICK_AIR &&
+        event.getAction() != Action.LEFT_CLICK_BLOCK)
+            return;
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command,
-                             String label, String[] args) {
-        if (!(sender instanceof Player)) return false;
-
-        return Spit.spit((Player) sender);
+        if (AutoSpitValuesStorage.getAutoSpitEnabled(event.getPlayer())) {
+            Spit.spit(event.getPlayer());
+            event.setCancelled(true);
+        }
     }
 }

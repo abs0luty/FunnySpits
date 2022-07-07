@@ -22,25 +22,28 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.commands;
+package org.vertex.funnyspits.logic.spit;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.spit.Spit;
+import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorage;
+import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorageColumn;
 
-public class SpitCommand implements CommandExecutor {
-    public SpitCommand(FunnySpits plugin) {
-        plugin.getCommand("spit").setExecutor(this);
+import java.util.ArrayList;
+import java.util.List;
+
+public class AutoSpit {
+    public static boolean on(Player player) {
+        AutoSpitValuesStorage.setAutoSpitEnabled(player, true);
+        return true;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command,
-                             String label, String[] args) {
-        if (!(sender instanceof Player)) return false;
-
-        return Spit.spit((Player) sender);
+    public static boolean off(Player player) {
+        AutoSpitValuesStorage.setAutoSpitEnabled(player, false);
+        return true;
     }
 }
