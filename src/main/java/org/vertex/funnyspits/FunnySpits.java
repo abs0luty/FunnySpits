@@ -41,8 +41,10 @@ public final class FunnySpits extends JavaPlugin {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info("\u001B[32mPlugin is up to date!\u001B[37m");
             } else {
-                getLogger().info("\u001B[31mThere is a new update available. " +
-                        "It is recommended to download it!\u001B[37m");
+                getLogger().info(String.format("\u001B[31mThere is a new update available (%s). " +
+                        "It is recommended to download it! Current plugin version: %s\u001B[37m",
+                        version,
+                        this.getDescription().getVersion()));
             }
         });
 

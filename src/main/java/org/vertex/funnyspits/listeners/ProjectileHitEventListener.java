@@ -24,8 +24,14 @@
 
 package org.vertex.funnyspits.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Bell;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -34,10 +40,21 @@ import org.vertex.funnyspits.FunnySpits;
 public class ProjectileHitEventListener implements Listener {
     @EventHandler
     public void onProjectileHitEvent(ProjectileHitEvent event) {
+        if (!(event.getEntity() instanceof LlamaSpit)) return;
+
         if (event.getEntity().getShooter() instanceof Player) {
-            event.setCancelled(true);
             LivingEntity entity = (LivingEntity) event.getHitEntity();
             if (entity == null) return;
+
+//            if (entity instanceof Villager &&
+//                    FunnySpits.configuration.getBoolean("spit_villager_interaction")) {
+//                ((Villager) entity).shakeHead();
+//            }
+//
+//            if (entity instanceof Bell &&
+//                    FunnySpits.configuration.getBoolean("spit_bell_interaction")) {
+//                ((Bell) entity).setPowered(true);
+//            }
 
             double damage = FunnySpits.configuration.getDouble("spit_damage");
             if (damage != 0) {
@@ -47,6 +64,17 @@ public class ProjectileHitEventListener implements Listener {
                     entity.setHealth(0);
                 }
             }
+
+//            Block block = event.getHitBlock();
+//            if (block == null) return;
+//
+//            Bukkit.getLogger().info("block!");
+//
+//            if (block.getType() == Material.SPONGE) {
+//                block.setType(Material.WET_SPONGE);
+//            }
+
+            event.setCancelled(true);
         }
     }
 }
