@@ -30,7 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.commands.FunnySpitsCommands;
 import org.vertex.funnyspits.commands.SpitCommand;
 import org.vertex.funnyspits.listeners.ProjectileHitEventListener;
-import update_checker.UpdateChecker;
+import org.vertex.funnyspits.update_checker.UpdateChecker;
 
 public final class FunnySpits extends JavaPlugin {
     public static FileConfiguration configuration;

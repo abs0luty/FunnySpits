@@ -1,4 +1,4 @@
-package update_checker;
+package org.vertex.funnyspits.update_checker;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
