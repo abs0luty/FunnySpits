@@ -28,18 +28,26 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.vertex.funnyspits.logic.spit.Spit;
-import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorage;
+import org.vertex.funnyspits.FunnySpits;
+import org.vertex.funnyspits.logic.SpitsManager;
+import org.vertex.funnyspits.logic.AutoSpitValuesStorage;
 
 public class LMBEventListener implements Listener {
+    private final FunnySpits plugin;
+
+    public LMBEventListener(FunnySpits plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
-    public void onRMB(PlayerInteractEvent event) {
+    public void onLMB(PlayerInteractEvent event) {
         if (event.getAction() != Action.LEFT_CLICK_AIR &&
         event.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
 
-        if (AutoSpitValuesStorage.getAutoSpitEnabled(event.getPlayer())) {
-            Spit.spit(event.getPlayer());
+        if (plugin.getAutoSpitValuesStorage()
+                .getAutoSpitEnabled(event.getPlayer())) {
+            plugin.getSpitsManager().spit(event.getPlayer());
             event.setCancelled(true);
         }
     }

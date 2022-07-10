@@ -22,65 +22,76 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic.spit;
+package org.vertex.funnyspits.logic;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.storage.CooldownValuesStorage;
 
 import java.util.Iterator;
 
-public class Spit {
-    public static boolean spit(Player player) {
-        long cooldownTime = FunnySpits.configuration.getLong(
-                "spit_command_cooldown");
+public class SpitsManager {
+    private FunnySpits plugin;
 
-        if (CooldownValuesStorage.playerRegistered(player) && cooldownTime != 0) {
-            long lastUsageTime = CooldownValuesStorage.getPlayerCommandUsageTime(
+    public SpitsManager(FunnySpits plugin) {
+        this.plugin = plugin;
+    }
+
+    public boolean spit(Player player) {
+        long cooldownTime = plugin.getConfiguration().getLong(
+                "spit_command_cooldown");
+        int bonusSpits;
+        if (!plugin.getCooldownValuesStorage().playerRegistered(player))
+            bonusSpits = 0;
+        else bonusSpits = plugin.getCooldownValuesStorage()
+                .getPlayerBonusWaterSpits(player);
+
+        if (!player.hasPermission(
+                plugin.getConfiguration().getString("spit_command_permission")
+        )) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.getMessagesConfiguration().getString(
+                            "spit_command_not_enough_permissions_message")));
+            return false;
+        }
+
+        if (bonusSpits > 0) {
+            plugin.getCooldownValuesStorage().decreaseBonusWaterSpits(player);
+        } else if (plugin.getCooldownValuesStorage().playerRegistered(player)
+                && cooldownTime != 0) {
+            long lastUsageTime = plugin.getCooldownValuesStorage()
+                    .getPlayerCommandUsageTime(
                     player);
             long timeSinceLastUsageTime = (System.currentTimeMillis() / 1000)
                     - lastUsageTime;
             if (timeSinceLastUsageTime < cooldownTime) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        String.format(FunnySpits.configuration.getString(
-                        "spit_command_cooldown_not_over_message"), cooldownTime - timeSinceLastUsageTime)));
+                        String.format(plugin.getMessagesConfiguration().getString(
+                        "spit_command_cooldown_not_over_message"),
+                                cooldownTime - timeSinceLastUsageTime)));
                 return false;
             }
         }
 
-        if (!player.hasPermission(
-                FunnySpits.configuration.getString("spit_command_permission")
-        )) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    FunnySpits.configuration.getString(
-                            "spit_command_not_enough_permissions_message")));
-            return false;
-        }
-
-        int spitIntensity = FunnySpits.configuration.getInt(
+        int spitIntensity = plugin.getConfiguration().getInt(
                 "spit_intensity");
 
         for (int i = 0; i < spitIntensity; i++) {
             player.launchProjectile(LlamaSpit.class);
         }
 
-        if (FunnySpits.configuration.getBoolean("spit_with_sound")) {
-            Player onlinePlayer;
-            for (Iterator<? extends Player> onlinePlayersIterator =
-                 Bukkit.getOnlinePlayers().iterator(); onlinePlayersIterator
-                         .hasNext(); ) {
-                onlinePlayer = onlinePlayersIterator.next();
-                onlinePlayer.playSound(player.getLocation(),
-                        Sound.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
-            }
+        if (plugin.getConfiguration().getBoolean("spit_with_sound")) {
+            player.getWorld().playSound(player.getLocation(),
+                    Sound.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
         }
 
         if (cooldownTime != 0) {
-            CooldownValuesStorage.setCommandUsageTime(player,
+            plugin.getCooldownValuesStorage().setCommandUsageTime(player,
                     System.currentTimeMillis() / 1000);
         }
 

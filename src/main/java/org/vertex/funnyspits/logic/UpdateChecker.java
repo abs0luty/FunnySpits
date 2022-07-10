@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic.update_checker;
+package org.vertex.funnyspits.logic;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

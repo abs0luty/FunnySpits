@@ -28,16 +28,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.vertex.funnyspits.logic.spit.Spit;
-import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorage;
+import org.vertex.funnyspits.FunnySpits;
+import org.vertex.funnyspits.logic.SpitsManager;
+import org.vertex.funnyspits.logic.AutoSpitValuesStorage;
 
 public class EntityDamageEventListener implements Listener {
+    private FunnySpits plugin;
+
+    public EntityDamageEventListener(FunnySpits plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
 
-        if (AutoSpitValuesStorage.getAutoSpitEnabled((Player) event.getDamager())) {
-            Spit.spit((Player) event.getDamager());
+        if (plugin.getAutoSpitValuesStorage().getAutoSpitEnabled
+                ((Player) event.getDamager())) {
+            plugin.getSpitsManager().spit((Player) event.getDamager());
             event.setCancelled(true);
         }
     }

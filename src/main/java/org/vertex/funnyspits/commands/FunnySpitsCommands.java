@@ -29,13 +29,11 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.spit.AutoSpit;
-import org.vertex.funnyspits.logic.spit.Spit;
 
 import java.util.*;
 
 public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
-    private FunnySpits plugin;
+    private final FunnySpits plugin;
 
     public FunnySpitsCommands(FunnySpits plugin) {
         this.plugin = plugin;
@@ -49,13 +47,13 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
             if (args[0].equals("spit")) {
                 if (!(sender instanceof Player)) return false;
 
-                return Spit.spit((Player) sender);
+                return plugin.getSpitsManager().spit((Player) sender);
             } else if (args[0].equals("reload")) {
                 boolean ableToReload = false;
                 if (sender instanceof ConsoleCommandSender) ableToReload = true;
                 else if (sender instanceof Player) {
                     if (sender.hasPermission(
-                            FunnySpits.configuration
+                            plugin.getConfiguration()
                                     .getString("reload_command_permission")
                     )) ableToReload = true;
                 }
@@ -64,7 +62,8 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                     if (sender instanceof Player) {
                         sender.sendMessage(
                                 ChatColor.translateAlternateColorCodes('&',
-                                        FunnySpits.configuration.getString(
+                                        plugin.getMessagesConfiguration()
+                                                .getString(
                                                 "reload_command_not_enough_permissions_message"))
                         );
                     }
@@ -72,26 +71,29 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                 } else {
                     plugin.saveDefaultConfig();
                     plugin.reloadConfig();
-                    FunnySpits.configuration = plugin.getConfig();
+                    plugin.setConfiguration(plugin.getConfig());
+                    plugin.getLocaleManager().loadLocaleConfiguration();
                 }
 
                 if (sender instanceof Player) {
                     sender.sendMessage(
                             ChatColor.translateAlternateColorCodes('&',
-                                    FunnySpits.configuration.getString(
+                                    plugin.getMessagesConfiguration().getString(
                                             "reload_command_success_message"))
                     );
                 }
                 return true;
             }
         } else if (args.length == 2) {
-            if (args[0].equals("autospit") && FunnySpits.configuration
+            if (args[0].equals("autospit") && plugin.getConfiguration()
                     .getBoolean("autospit_enabled")) {
                 if (!(sender instanceof Player)) return false;
 
                 Player player = (Player) sender;
-                if (args[1].equals("on")) return AutoSpit.on(player);
-                if (args[1].equals("off")) return AutoSpit.off(player);
+                if (args[1].equals("on")) return plugin.getAutoSpitManager()
+                        .turnAutoSpitOn(player);
+                if (args[1].equals("off")) return plugin.getAutoSpitManager()
+                        .turnAutoSpitOff(player);
             }
         }
 
@@ -109,16 +111,16 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
             if (sender instanceof Player) {
                 Player player = ((Player) sender);
 
-                if (player.hasPermission(FunnySpits.configuration
+                if (player.hasPermission(plugin.getConfiguration()
                         .getString("spit_command_permission")))
                     completionsList.add("spit");
 
-                if (player.hasPermission(FunnySpits.configuration
+                if (player.hasPermission(plugin.getConfiguration()
                         .getString("reload_command_permission")))
                     completionsList.add("reload");
 
-                if (FunnySpits.configuration.getBoolean("autospit_enabled") &&
-                        player.hasPermission(FunnySpits.configuration
+                if (plugin.getConfiguration().getBoolean("autospit_enabled") &&
+                        player.hasPermission(plugin.getConfiguration()
                                 .getString("spit_command_permission")))
                     completionsList.add("autospit");
             } else if (sender instanceof ConsoleCommandSender) {
@@ -130,7 +132,7 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                     completions);
             Collections.sort(completions);
             return completions;
-        } else if (args.length == 2 && FunnySpits.configuration.getBoolean(
+        } else if (args.length == 2 && plugin.getConfiguration().getBoolean(
                 "autospit_enabled")) {
             StringUtil.copyPartialMatches(
                     args[1], Arrays.asList(

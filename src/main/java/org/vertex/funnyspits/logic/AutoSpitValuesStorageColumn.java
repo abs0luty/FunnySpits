@@ -22,47 +22,28 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic.storage;
+package org.vertex.funnyspits.logic;
 
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+public class AutoSpitValuesStorageColumn {
+    private final Player player;
+    private boolean enabled;
 
-public class AutoSpitValuesStorage {
-    private static List<AutoSpitValuesStorageColumn> columns = new ArrayList<>();
-
-    public static boolean playerRegistered(Player player) {
-        for (AutoSpitValuesStorageColumn column: columns) {
-            if (column.getPlayer().equals(player)) return true;
-        }
-
-        return false;
+    public AutoSpitValuesStorageColumn(Player player, boolean enabled) {
+        this.player = player;
+        this.enabled = enabled;
     }
 
-    public static boolean getAutoSpitEnabled(Player player) {
-        for (AutoSpitValuesStorageColumn column: columns) {
-            if (column.getPlayer().equals(player)) {
-                return column.getEnabled();
-            }
-        }
-
-        return false;
+    public Player getPlayer() {
+        return player;
     }
 
-    private static void addColumn(Player player, boolean enabled) {
-        columns.add(new AutoSpitValuesStorageColumn(player, enabled));
+    public boolean getEnabled() {
+        return enabled;
     }
 
-    public static void setAutoSpitEnabled(Player player, boolean enabled) {
-        if (!playerRegistered(player)) {
-            addColumn(player, enabled);
-        }
-
-        for (AutoSpitValuesStorageColumn column: columns) {
-            if (column.getPlayer().equals(player)) {
-                column.setEnabled(enabled);
-            }
-        }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -29,10 +29,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.spit.Spit;
+import org.vertex.funnyspits.logic.SpitsManager;
 
 public class SpitCommand implements CommandExecutor {
+    private FunnySpits plugin;
+
     public SpitCommand(FunnySpits plugin) {
+        this.plugin = plugin;
         plugin.getCommand("spit").setExecutor(this);
     }
 
@@ -41,6 +44,6 @@ public class SpitCommand implements CommandExecutor {
                              String label, String[] args) {
         if (!(sender instanceof Player)) return false;
 
-        return Spit.spit((Player) sender);
+        return plugin.getSpitsManager().spit((Player) sender);
     }
 }

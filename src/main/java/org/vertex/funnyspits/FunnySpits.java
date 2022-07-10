@@ -30,10 +30,53 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.commands.FunnySpitsCommands;
 import org.vertex.funnyspits.commands.SpitCommand;
 import org.vertex.funnyspits.listeners.*;
-import org.vertex.funnyspits.logic.update_checker.UpdateChecker;
+import org.vertex.funnyspits.logic.*;
+import org.vertex.funnyspits.resources.LocaleManager;
 
 public final class FunnySpits extends JavaPlugin {
-    public static FileConfiguration configuration;
+    private FileConfiguration configuration;
+    private FileConfiguration messagesConfiguration;
+    private CooldownValuesStorage cooldownValuesStorage;
+    private AutoSpitValuesStorage autoSpitValuesStorage;
+    private LocaleManager localeManager;
+    private AutoSpitManager autoSpitManager;
+    private SpitsManager spitsManager;
+
+    public FileConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public FileConfiguration getMessagesConfiguration() {
+        return messagesConfiguration;
+    }
+
+    public CooldownValuesStorage getCooldownValuesStorage() {
+        return cooldownValuesStorage;
+    }
+
+    public AutoSpitValuesStorage getAutoSpitValuesStorage() {
+        return autoSpitValuesStorage;
+    }
+
+    public LocaleManager getLocaleManager() {
+        return localeManager;
+    }
+
+    public AutoSpitManager getAutoSpitManager() {
+        return autoSpitManager;
+    }
+
+    public SpitsManager getSpitsManager() {
+        return spitsManager;
+    }
+
+    public void setConfiguration(FileConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
+    public void setMessagesConfiguration(FileConfiguration messagesConfiguration) {
+        this.messagesConfiguration = messagesConfiguration;
+    }
 
     @Override
     public void onEnable() {
@@ -42,13 +85,24 @@ public final class FunnySpits extends JavaPlugin {
                 getLogger().info("\u001B[32mPlugin is up to date!\u001B[37m");
             } else {
                 getLogger().info(String.format("\u001B[31mThere is a new update available (%s). " +
-                        "It is recommended to download it! Current plugin version: %s\u001B[37m",
+                                "It is recommended to download it! Current plugin version: %s\u001B[37m",
                         version,
                         this.getDescription().getVersion()));
             }
         });
 
+
         saveDefaultConfig();
+
+        autoSpitManager = new AutoSpitManager(this);
+
+        autoSpitValuesStorage = new AutoSpitValuesStorage();
+        cooldownValuesStorage = new CooldownValuesStorage();
+
+        localeManager = new LocaleManager(this);
+        localeManager.loadLocaleConfiguration();
+
+        spitsManager = new SpitsManager(this);
 
         configuration = getConfig();
 
@@ -62,8 +116,9 @@ public final class FunnySpits extends JavaPlugin {
 
         PluginManager manager = getServer().getPluginManager();
         manager.registerEvents(new ProjectileHitEventListener(this), this);
-        manager.registerEvents(new LMBEventListener(), this);
-        manager.registerEvents(new EntityDamageEventListener(), this);
+        manager.registerEvents(new LMBEventListener(this), this);
+        manager.registerEvents(new EntityDamageEventListener(this), this);
+        manager.registerEvents(new DrinkEventListener(this), this);
     }
 
     @Override

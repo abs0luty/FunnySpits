@@ -1,0 +1,20 @@
+language: 'russian'
+author: 'verteXGMD'
+
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cУ вас нет прав, чтобы плеваться'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aАвтоплевки включены'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aАвтоплевки отключены'
+
+spit_command_cooldown_not_over_message:
+  '&f[&eFunnySpits&f] &cУпс, кажется у вас еще не выделилась слюна! Подождите %d секунд и вы снова сможете плеваться'
+
+reload_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cУ вас нет прав на перезагрузку плагина'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aПлагин успешно перезагрузился'

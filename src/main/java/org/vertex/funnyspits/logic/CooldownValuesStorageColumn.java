@@ -22,28 +22,41 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic.storage;
+package org.vertex.funnyspits.logic;
 
 import org.bukkit.entity.Player;
 
-public class AutoSpitValuesStorageColumn {
+public class CooldownValuesStorageColumn {
     private final Player player;
-    private boolean enabled;
+    private long lastSpitCommandUsageTime;
 
-    public AutoSpitValuesStorageColumn(Player player, boolean enabled) {
+    private int bonusWaterSpits;
+
+    public CooldownValuesStorageColumn(Player player,
+                                       long lastSpitCommandUsageTime,
+                                       int bonusWaterSpits) {
         this.player = player;
-        this.enabled = enabled;
+        this.lastSpitCommandUsageTime = lastSpitCommandUsageTime;
+        this.bonusWaterSpits = bonusWaterSpits;
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public boolean getEnabled() {
-        return enabled;
+    public long getLastSpitCommandUsageTime() {
+        return lastSpitCommandUsageTime;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public int getBonusWaterSpits() {
+        return bonusWaterSpits;
+    }
+
+    public void setLastSpitCommandUsageTime(long lastSpitCommandUsageTime) {
+        this.lastSpitCommandUsageTime = lastSpitCommandUsageTime;
+    }
+
+    public void setBonusWaterSpits(int bonusWaterSpits) {
+        this.bonusWaterSpits = bonusWaterSpits;
     }
 }

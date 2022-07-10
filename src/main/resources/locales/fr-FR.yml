@@ -1,0 +1,20 @@
+language: 'french'
+author: 'FireDrakula'
+
+spit_command_not_enough_permissions_message:
+    '&f[&eFunnySpits&f] &cVous n''avez pas les permissions pour cracher'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aAuto-crachats activés'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aAuto-crachats désactivés'
+
+spit_command_cooldown_not_over_message:
+    '&f[&eFunnySpits&f] &cZut! Il semblerait qu''il n''y ai plus assez de salive, attendez %d seconde(s) et vous pourrez cracher à nouveau'
+
+reload_command_not_enough_permissions_message:
+    '&f[&eFunnySpits&f] &cVous n''avez pas assez de permissions pour redémarrer le plugin'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aPlugin redémarré avec succès'

@@ -24,19 +24,19 @@
 
 package org.vertex.funnyspits.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Bell;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.util.BlockIterator;
+import org.bukkit.projectiles.ProjectileSource;
 import org.vertex.funnyspits.FunnySpits;
+import org.vertex.funnyspits.logic.Effects;
 
 public class ProjectileHitEventListener implements Listener {
-    private FunnySpits plugin;
+    private final FunnySpits plugin;
 
     public ProjectileHitEventListener(FunnySpits plugin) {
         this.plugin = plugin;
@@ -46,34 +46,48 @@ public class ProjectileHitEventListener implements Listener {
     public void onProjectileHitEvent(ProjectileHitEvent event) {
         if (!(event.getEntity() instanceof LlamaSpit)) return;
 
-        if (event.getEntity().getShooter() instanceof Player) {
+        ProjectileSource shooter = event.getEntity().getShooter();
+        if (shooter instanceof Player) {
             event.setCancelled(true);
 
             LivingEntity entity = (LivingEntity) event.getHitEntity();
             if (entity == null) return;
 
-            if (entity instanceof Villager &&
-                    FunnySpits.configuration.getBoolean("spit_villager_interaction")) {
-                ((Villager) entity).shakeHead();
+            if (entity instanceof Player) {
+                if (plugin.getConfiguration().getBoolean(
+                        "potion_effects_trasmission_enabled"))
+                    Effects.giveEffects((Player) event.getEntity().getShooter(),
+                            (Player) entity);
             }
 
-            if (entity instanceof Bell &&
-                    FunnySpits.configuration.getBoolean("spit_bell_interaction")) {
-                ((Bell) entity).setPowered(true);
+            if (entity instanceof Villager) {
+                ((Villager) entity).setProfession(Villager.Profession.NITWIT);
+                ((Villager) entity).shakeHead();
+                ((Player) shooter).getWorld()
+                        .playSound(((Player) shooter).getLocation(),
+                                Sound.ENTITY_VILLAGER_NO, 1.0f,
+                                1.0f);
             }
 
             Block block = event.getEntity().getLocation().getBlock();
 
+            if (block.getType() == Material.BELL) {
+//                BellEffect.playBellEffect(block);
+            }
+
             plugin.getLogger().info(block.getType().toString());
 
-            double damage = FunnySpits.configuration.getDouble("spit_damage");
+            double damage = plugin.getConfiguration().getDouble(
+                    "spit_damage");
             if (damage != 0) {
                 entity.damage(damage);
             } else {
-                if (FunnySpits.configuration.getBoolean("spit_kill")) {
+                if (plugin.getConfiguration().getBoolean("spit_kill")) {
                     entity.setHealth(0);
                 }
             }
+
+            event.setCancelled(true);
         }
     }
 }

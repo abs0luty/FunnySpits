@@ -1,12 +1,6 @@
-# If you want only players who have the specific permission to be able
-# to "spit", change the parameter's value to that specific permission. If
-# you want everybody to be able to "spit", then set its value to ''.
-spit_command_permission: 'funnyspits.use'
+locale: 'en-US'
 
-# Message that shows up if player doesn't have specified earlier
-# permission, but tries to run the spit command.
-spit_command_not_enough_permissions_message:
-  '&f[&eFunnySpits&f] &cYou do not have the permission to "spit"'
+spit_command_permission: 'funnyspits.use'
 
 # Set to true if you want sound of llama spit to be played near the location
 # of where the player has spat at else set to false.
@@ -27,28 +21,13 @@ spit_kill: false
 # Spit command cooldown (if value is zero, cooldown is cancelled).
 spit_command_cooldown: 5
 
-# If villager was spat he will head shake
-spit_villager_interaction: true
+bonus_water_spits: 5
 
-# If bell was spat it will be rung
-spit_bell_interaction: true
+potion_effect_transmission_enabled: true
 
-spit_sponge_interaction: true
+potion_effect_transmission_percentage: 40
 
 autospit_enabled: true
 
-# Message shown when cooldown is not over.
-spit_command_cooldown_not_over_message:
-  '&f[&eFunnySpits&f] &cOops cooldown is not over, it is only about to wait for %d seconds!'
-
 # Permission for that player to be able to run plugin config reload command.
 reload_command_permission: 'funnyspits.reload'
-
-# Message that shows up if player doesn't have specified earlier permission,
-# but tries to run the reload command.
-reload_command_not_enough_permissions_message:
-  '&f[&eFunnySpits&f] &cYou do not have the permission to reload the plugin'
-
-# Message that shows up if plugin was reloaded successfully.
-reload_command_success_message:
-  '&f[&eFunnySpits&f] &aSuccessfully reloaded the plugin'

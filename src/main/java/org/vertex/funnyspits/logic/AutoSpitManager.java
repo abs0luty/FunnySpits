@@ -22,28 +22,37 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic.spit;
+package org.vertex.funnyspits.logic;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorage;
-import org.vertex.funnyspits.logic.storage.AutoSpitValuesStorageColumn;
 
-import java.util.ArrayList;
-import java.util.List;
+public class AutoSpitManager {
+    private final FunnySpits plugin;
 
-public class AutoSpit {
-    public static boolean on(Player player) {
-        AutoSpitValuesStorage.setAutoSpitEnabled(player, true);
+    public AutoSpitManager(FunnySpits plugin) {
+        this.plugin = plugin;
+    }
+
+    public boolean turnAutoSpitOn(Player player) {
+        plugin.getAutoSpitValuesStorage().setAutoSpitEnabled(player);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                plugin.getMessagesConfiguration().getString(
+                "autospit_turned_on_message")));
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
+                1f, 1f);
         return true;
     }
 
-    public static boolean off(Player player) {
-        AutoSpitValuesStorage.setAutoSpitEnabled(player, false);
+    public boolean turnAutoSpitOff(Player player) {
+        plugin.getAutoSpitValuesStorage().setAutoSpitDisabled(player);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                plugin.getMessagesConfiguration().getString(
+                "autospit_turned_off_message")));
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
+                1f, 1f);
         return true;
     }
 }

@@ -1,0 +1,20 @@
+language: 'english'
+author: 'verteXGMD'
+
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cYou do not have the permission to "spit"'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aAutospit turned on'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aAutospit turned off'
+
+spit_command_cooldown_not_over_message:
+  '&f[&eFunnySpits&f] &cOops cooldown is not over, it is only about to wait for %d seconds!'
+
+reload_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cYou do not have the permission to reload the plugin'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aSuccessfully reloaded the plugin'

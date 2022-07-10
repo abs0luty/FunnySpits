@@ -55,7 +55,7 @@
 
     <repositories>
         <repository>
-            <id>spigotmc-repo</id>
+            <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
@@ -72,4 +72,5 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 </project>

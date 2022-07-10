@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic.storage;
+package org.vertex.funnyspits.logic;
 
 import org.bukkit.entity.Player;
 
@@ -32,7 +32,9 @@ import java.util.List;
 public class CooldownValuesStorage {
     private static List<CooldownValuesStorageColumn> columns = new ArrayList<>();
 
-    public static boolean playerRegistered(Player player) {
+    public CooldownValuesStorage() {}
+
+    public boolean playerRegistered(Player player) {
         for (CooldownValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) return true;
         }
@@ -40,7 +42,7 @@ public class CooldownValuesStorage {
         return false;
     }
 
-    public static long getPlayerCommandUsageTime(Player player) {
+    public long getPlayerCommandUsageTime(Player player) {
         for (CooldownValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
                 return column.getLastSpitCommandUsageTime();
@@ -50,11 +52,26 @@ public class CooldownValuesStorage {
         return 0;
     }
 
-    private static void addPlayerCommandUsageTime(Player player, long time) {
-        columns.add(new CooldownValuesStorageColumn(player, time));
+    public int getPlayerBonusWaterSpits(Player player) {
+        for (CooldownValuesStorageColumn column: columns) {
+            if (column.getPlayer().equals(player)) {
+                return column.getBonusWaterSpits();
+            }
+        }
+
+        return 0;
     }
 
-    public static void setCommandUsageTime(Player player, long time) {
+    private void addPlayerCommandUsageTime(Player player, long time) {
+        columns.add(new CooldownValuesStorageColumn(player, time, 0));
+    }
+
+    private void addPlayerCommandUsageTimeAndAmount(Player player,
+                                                           long time, int amount) {
+        columns.add(new CooldownValuesStorageColumn(player, time, amount));
+    }
+
+    public void setCommandUsageTime(Player player, long time) {
         if (!playerRegistered(player)) {
             addPlayerCommandUsageTime(player, time);
         }
@@ -62,6 +79,27 @@ public class CooldownValuesStorage {
         for (CooldownValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
                 column.setLastSpitCommandUsageTime(time);
+            }
+        }
+    }
+
+    public void setBonusWaterSpits(Player player, int amount) {
+        if (!playerRegistered(player)) {
+            addPlayerCommandUsageTimeAndAmount(player,
+                    System.currentTimeMillis() / 1000, amount);
+        }
+
+        for (CooldownValuesStorageColumn column: columns) {
+            if (column.getPlayer().equals(player)) {
+                column.setBonusWaterSpits(amount);
+            }
+        }
+    }
+
+    public void decreaseBonusWaterSpits(Player player) {
+        for (CooldownValuesStorageColumn column: columns) {
+            if (column.getPlayer().equals(player)) {
+                column.setBonusWaterSpits(column.getBonusWaterSpits() - 1);
             }
         }
     }
