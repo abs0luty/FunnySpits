@@ -71,15 +71,6 @@ public class ProjectileHitEventListener implements Listener {
             LivingEntity entity = (LivingEntity) event.getHitEntity();
             if (entity == null) return;
 
-            if (entity instanceof Villager) {
-                ((Villager) entity).setProfession(Villager.Profession.NITWIT);
-                ((Villager) entity).shakeHead();
-                ((Player) shooter).getWorld()
-                        .playSound(((Player) shooter).getLocation(),
-                                Sound.ENTITY_VILLAGER_NO, 1.0f,
-                                1.0f);
-            }
-
             if (entity instanceof Player && shooter == (Player) entity) return;
 
             double damage = plugin.getConfiguration().getDouble(
