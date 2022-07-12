@@ -22,37 +22,26 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic;
+package org.vertex.funnyspits.listeners;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.vertex.funnyspits.FunnySpits;
 
-public class AutoSpitManager {
-    private final FunnySpits plugin;
+public class BlockBreakEventListener implements Listener {
+    private FunnySpits plugin;
 
-    public AutoSpitManager(FunnySpits plugin) {
+    public BlockBreakEventListener(FunnySpits plugin) {
         this.plugin = plugin;
     }
 
-    public boolean turnAutoSpitOn(Player player) {
-        plugin.getAutoSpitValuesStorage().setAutoSpitEnabled(player);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                plugin.getMessagesConfiguration().getString(
-                "autospit_turned_on_message")));
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
-                1f, 1f);
-        return true;
-    }
-
-    public boolean turnAutoSpitOff(Player player) {
-        plugin.getAutoSpitValuesStorage().setAutoSpitDisabled(player);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                plugin.getMessagesConfiguration().getString(
-                "autospit_turned_off_message")));
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
-                1f, 1f);
-        return true;
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (event.getBlock().getType() == Material.SPONGE) {
+            plugin.getSpongeBlockHumidityValuesStorage()
+                    .removeBlockAt(event.getBlock().getLocation());
+        }
     }
 }

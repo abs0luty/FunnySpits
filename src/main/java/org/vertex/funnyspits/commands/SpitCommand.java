@@ -29,7 +29,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.SpitsManager;
 
 public class SpitCommand implements CommandExecutor {
     private FunnySpits plugin;

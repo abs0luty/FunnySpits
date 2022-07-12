@@ -1,0 +1,20 @@
+language: 'ukrainian'
+author: 'evgen30'
+
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cУ вас немає прав, щоб плюватися'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aАвтоплювки увімкнено'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aАвтоплювки вимкнено'
+
+spit_command_cooldown_not_over_message:
+  '&f[&eFunnySpits&f] &cУпс, здається у вас ще не виділилася слюна! Почекайте %d секунд і ви знову зможете плюватися'
+
+reload_command_not_enough_permissions_message:
+    '&f[&eFunnySpits&f] &cУ вас немає прав на перезагрузку плагіна'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aПлагин успішно перезапустився'

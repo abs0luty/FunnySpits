@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic;
+package org.vertex.funnyspits.storage;
 
 import org.bukkit.entity.Player;
 
@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoSpitValuesStorage {
-    private static List<AutoSpitValuesStorageColumn> columns = new ArrayList<>();
+    private static List<AutoSpitValuesStorageColumn> columns =
+            new ArrayList<>();
 
     public AutoSpitValuesStorage() {}
 
@@ -57,15 +58,14 @@ public class AutoSpitValuesStorage {
     }
 
     public void setAutoSpitAbility(Player player, boolean enabled) {
-        if (!playerRegistered(player)) {
-            addColumn(player, enabled);
-        }
-
         for (AutoSpitValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
                 column.setEnabled(enabled);
+                return;
             }
         }
+
+        addColumn(player, enabled);
     }
 
     public void setAutoSpitEnabled(Player player) {

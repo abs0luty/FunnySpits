@@ -22,23 +22,18 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic;
+package org.vertex.funnyspits.spit;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.FunnySpits;
 
-import java.util.Iterator;
-
-public class SpitsManager {
+public class SpitManager {
     private FunnySpits plugin;
 
-    public SpitsManager(FunnySpits plugin) {
+    public SpitManager(FunnySpits plugin) {
         this.plugin = plugin;
     }
 

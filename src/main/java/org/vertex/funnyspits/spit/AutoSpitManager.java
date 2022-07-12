@@ -22,41 +22,37 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic;
+package org.vertex.funnyspits.spit;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.vertex.funnyspits.FunnySpits;
 
-public class CooldownValuesStorageColumn {
-    private final Player player;
-    private long lastSpitCommandUsageTime;
+public class AutoSpitManager {
+    private final FunnySpits plugin;
 
-    private int bonusWaterSpits;
-
-    public CooldownValuesStorageColumn(Player player,
-                                       long lastSpitCommandUsageTime,
-                                       int bonusWaterSpits) {
-        this.player = player;
-        this.lastSpitCommandUsageTime = lastSpitCommandUsageTime;
-        this.bonusWaterSpits = bonusWaterSpits;
+    public AutoSpitManager(FunnySpits plugin) {
+        this.plugin = plugin;
     }
 
-    public Player getPlayer() {
-        return player;
+    public boolean turnAutoSpitOn(Player player) {
+        plugin.getAutoSpitValuesStorage().setAutoSpitEnabled(player);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                plugin.getMessagesConfiguration().getString(
+                "autospit_turned_on_message")));
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
+                1f, 1f);
+        return true;
     }
 
-    public long getLastSpitCommandUsageTime() {
-        return lastSpitCommandUsageTime;
-    }
-
-    public int getBonusWaterSpits() {
-        return bonusWaterSpits;
-    }
-
-    public void setLastSpitCommandUsageTime(long lastSpitCommandUsageTime) {
-        this.lastSpitCommandUsageTime = lastSpitCommandUsageTime;
-    }
-
-    public void setBonusWaterSpits(int bonusWaterSpits) {
-        this.bonusWaterSpits = bonusWaterSpits;
+    public boolean turnAutoSpitOff(Player player) {
+        plugin.getAutoSpitValuesStorage().setAutoSpitDisabled(player);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                plugin.getMessagesConfiguration().getString(
+                "autospit_turned_off_message")));
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
+                1f, 1f);
+        return true;
     }
 }

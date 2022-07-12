@@ -29,8 +29,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.SpitsManager;
-import org.vertex.funnyspits.logic.AutoSpitValuesStorage;
 
 public class LMBEventListener implements Listener {
     private final FunnySpits plugin;

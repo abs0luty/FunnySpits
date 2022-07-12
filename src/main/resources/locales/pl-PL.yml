@@ -1,0 +1,20 @@
+language: 'polish'
+author: 'evgen30'
+
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cNie masz prawa pluć'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aAutomatyczne wypluwanie zestawie'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aAutomatyczne wypluwanie wyłączone'
+
+spit_command_cooldown_not_over_message:
+  '&f[&eFunnySpits&f] &cУUps, wygląda na to, że jeszcze się nie śliniłeś! Czekać %d sekund i znów możesz pluć'
+
+reload_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cNie masz uprawnień do ponownego załadowania wtyczki'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aWtyczka została pomyślnie przeładowana'

@@ -22,29 +22,28 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.listeners;
+package org.vertex.funnyspits.storage;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.vertex.funnyspits.FunnySpits;
 
-public class EntityDamageEventListener implements Listener {
-    private FunnySpits plugin;
+public class AutoSpitValuesStorageColumn {
+    private final Player player;
+    private boolean enabled;
 
-    public EntityDamageEventListener(FunnySpits plugin) {
-        this.plugin = plugin;
+    public AutoSpitValuesStorageColumn(Player player, boolean enabled) {
+        this.player = player;
+        this.enabled = enabled;
     }
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) return;
+    public Player getPlayer() {
+        return player;
+    }
 
-        if (plugin.getAutoSpitValuesStorage().getAutoSpitEnabled
-                ((Player) event.getDamager())) {
-            plugin.getSpitsManager().spit((Player) event.getDamager());
-            event.setCancelled(true);
-        }
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

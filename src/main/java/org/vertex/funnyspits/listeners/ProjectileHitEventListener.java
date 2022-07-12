@@ -24,16 +24,20 @@
 
 package org.vertex.funnyspits.listeners;
 
+import net.minecraft.core.BlockPosition;
+import net.minecraft.network.protocol.game.PacketPlayOutBlockAction;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.vertex.funnyspits.FunnySpits;
-import org.vertex.funnyspits.logic.Effects;
 
 public class ProjectileHitEventListener implements Listener {
     private final FunnySpits plugin;
@@ -50,15 +54,22 @@ public class ProjectileHitEventListener implements Listener {
         if (shooter instanceof Player) {
             event.setCancelled(true);
 
+            Block block = event.getHitBlock();
+            if (block != null) {
+                if (block.getType() == Material.SPONGE) {
+                    plugin.getSpongeBlockHumidityValuesStorage().increaseHumidity(
+                            block.getLocation());
+                    int humidity = plugin.getSpongeBlockHumidityValuesStorage().getHumidity(
+                                    block.getLocation());
+                    if (humidity >= plugin.getConfiguration()
+                            .getInt("sponge_blocks_spits_required")) {
+                        block.setType(Material.WET_SPONGE);
+                    }
+                }
+            }
+
             LivingEntity entity = (LivingEntity) event.getHitEntity();
             if (entity == null) return;
-
-            if (entity instanceof Player) {
-                if (plugin.getConfiguration().getBoolean(
-                        "potion_effects_trasmission_enabled"))
-                    Effects.giveEffects((Player) event.getEntity().getShooter(),
-                            (Player) entity);
-            }
 
             if (entity instanceof Villager) {
                 ((Villager) entity).setProfession(Villager.Profession.NITWIT);
@@ -69,13 +80,7 @@ public class ProjectileHitEventListener implements Listener {
                                 1.0f);
             }
 
-            Block block = event.getEntity().getLocation().getBlock();
-
-            if (block.getType() == Material.BELL) {
-//                BellEffect.playBellEffect(block);
-            }
-
-            plugin.getLogger().info(block.getType().toString());
+            if (entity instanceof Player && shooter == (Player) entity) return;
 
             double damage = plugin.getConfiguration().getDouble(
                     "spit_damage");
@@ -86,8 +91,6 @@ public class ProjectileHitEventListener implements Listener {
                     entity.setHealth(0);
                 }
             }
-
-            event.setCancelled(true);
         }
     }
 }

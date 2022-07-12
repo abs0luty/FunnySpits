@@ -8,7 +8,7 @@ spit_with_sound: true
 
 # Intensity value of "spit" (number), value is required to be in the
 # interval of numbers from 1 to 10.
-spit_intensity: 1
+spit_intensity: 3
 
 # Damage that will be inflicted on the player/mob if it was spat.
 # Must be set to 0 if you want next option to come in place
@@ -23,9 +23,9 @@ spit_command_cooldown: 5
 
 bonus_water_spits: 5
 
-potion_effect_transmission_enabled: true
+sponge_blocks_interaction_enabled: true
 
-potion_effect_transmission_percentage: 40
+sponge_blocks_spits_required: 39
 
 autospit_enabled: true
 

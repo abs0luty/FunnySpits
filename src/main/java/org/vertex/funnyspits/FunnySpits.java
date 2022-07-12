@@ -30,17 +30,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.commands.FunnySpitsCommands;
 import org.vertex.funnyspits.commands.SpitCommand;
 import org.vertex.funnyspits.listeners.*;
-import org.vertex.funnyspits.logic.*;
-import org.vertex.funnyspits.resources.LocaleManager;
+import org.vertex.funnyspits.spit.AutoSpitManager;
+import org.vertex.funnyspits.spit.PotionEffectsManager;
+import org.vertex.funnyspits.spit.SpitManager;
+import org.vertex.funnyspits.storage.AutoSpitValuesStorage;
+import org.vertex.funnyspits.storage.CooldownValuesStorage;
+import org.vertex.funnyspits.resource.LocaleManager;
+import org.vertex.funnyspits.resource.ResourceManager;
+import org.vertex.funnyspits.storage.SpongeBlockHumidityValuesStorage;
 
 public final class FunnySpits extends JavaPlugin {
     private FileConfiguration configuration;
     private FileConfiguration messagesConfiguration;
     private CooldownValuesStorage cooldownValuesStorage;
     private AutoSpitValuesStorage autoSpitValuesStorage;
+    private SpongeBlockHumidityValuesStorage spongeBlockHumidityValuesStorage;
+    private ResourceManager resourceManager;
     private LocaleManager localeManager;
     private AutoSpitManager autoSpitManager;
-    private SpitsManager spitsManager;
+    private SpitManager spitsManager;
+    private PotionEffectsManager potionEffectsManager;
 
     public FileConfiguration getConfiguration() {
         return configuration;
@@ -58,6 +67,14 @@ public final class FunnySpits extends JavaPlugin {
         return autoSpitValuesStorage;
     }
 
+    public SpongeBlockHumidityValuesStorage getSpongeBlockHumidityValuesStorage() {
+        return spongeBlockHumidityValuesStorage;
+    }
+
+    public ResourceManager getResourceManager() {
+        return resourceManager;
+    }
+
     public LocaleManager getLocaleManager() {
         return localeManager;
     }
@@ -66,8 +83,12 @@ public final class FunnySpits extends JavaPlugin {
         return autoSpitManager;
     }
 
-    public SpitsManager getSpitsManager() {
+    public SpitManager getSpitsManager() {
         return spitsManager;
+    }
+
+    public PotionEffectsManager getPotionEffectsManager() {
+        return potionEffectsManager;
     }
 
     public void setConfiguration(FileConfiguration configuration) {
@@ -98,11 +119,19 @@ public final class FunnySpits extends JavaPlugin {
 
         autoSpitValuesStorage = new AutoSpitValuesStorage();
         cooldownValuesStorage = new CooldownValuesStorage();
+        spongeBlockHumidityValuesStorage = new SpongeBlockHumidityValuesStorage();
+
+        resourceManager = new ResourceManager(this);
 
         localeManager = new LocaleManager(this);
         localeManager.loadLocaleConfiguration();
 
-        spitsManager = new SpitsManager(this);
+        spitsManager = new SpitManager(this);
+
+        potionEffectsManager = new PotionEffectsManager();
+
+        ListenersManager listenersManager = new ListenersManager(this);
+        listenersManager.registerListeners();
 
         configuration = getConfig();
 
@@ -113,12 +142,6 @@ public final class FunnySpits extends JavaPlugin {
 
         new FunnySpitsCommands(this);
         new SpitCommand(this);
-
-        PluginManager manager = getServer().getPluginManager();
-        manager.registerEvents(new ProjectileHitEventListener(this), this);
-        manager.registerEvents(new LMBEventListener(this), this);
-        manager.registerEvents(new EntityDamageEventListener(this), this);
-        manager.registerEvents(new DrinkEventListener(this), this);
     }
 
     @Override

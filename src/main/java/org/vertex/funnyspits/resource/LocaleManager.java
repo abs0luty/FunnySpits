@@ -1,4 +1,4 @@
-package org.vertex.funnyspits.resources;
+package org.vertex.funnyspits.resource;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,7 +17,7 @@ public class LocaleManager {
     public void loadLocaleConfiguration() {
         saveDefaultLocales(plugin);
 
-        ((FunnySpits) plugin).setMessagesConfiguration(YamlConfiguration
+        plugin.setMessagesConfiguration(YamlConfiguration
                 .loadConfiguration(
                 new File(
                     plugin.getDataFolder(),
@@ -31,7 +31,7 @@ public class LocaleManager {
     }
 
     private void saveDefaultLocales(FunnySpits plugin) {
-        SaveDefaultResource.save("locales.yml", plugin);
+        plugin.getResourceManager().overwriteResource("locales.yml");
 
         FileConfiguration localesConfiguration = YamlConfiguration
                 .loadConfiguration(new File(plugin.getDataFolder(),
@@ -41,8 +41,8 @@ public class LocaleManager {
                 "locales");
         for (String localeName: localesList) {
             this.plugin.getLogger().info(localeName);
-            SaveDefaultResource.save(String.format("locales/%s.yml",
-                    localeName), this.plugin);
+            plugin.getResourceManager().saveResource(String.format("locales/%s.yml",
+                    localeName));
         }
     }
 }

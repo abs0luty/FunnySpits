@@ -1,0 +1,20 @@
+language: 'belorussian'
+author: 'evgen30'
+
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cУ Вы не маеце права плявацца'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aАўтаматычны плявок уключаны'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aАўтаматычная пляўка адключана'
+
+spit_command_cooldown_not_over_message:
+  '&f[&eFunnySpits&f] &cОй, здаецца, яшчэ не пацяклі слінкі! Чакаць %d секунд, і вы зноў можаце плюнуць'
+
+reload_command_not_enough_permissions_message:
+    '&f[&eFunnySpits&f] &cУ вас няма правоў на перазагрузку плагіна'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aПлагін паспяхова перазапушчаны'

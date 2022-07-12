@@ -24,27 +24,30 @@
 
 package org.vertex.funnyspits.listeners;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.plugin.PluginManager;
 import org.vertex.funnyspits.FunnySpits;
 
-public class EntityDamageEventListener implements Listener {
+public class ListenersManager {
     private FunnySpits plugin;
 
-    public EntityDamageEventListener(FunnySpits plugin) {
+    public ListenersManager(FunnySpits plugin) {
         this.plugin = plugin;
     }
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) return;
-
-        if (plugin.getAutoSpitValuesStorage().getAutoSpitEnabled
-                ((Player) event.getDamager())) {
-            plugin.getSpitsManager().spit((Player) event.getDamager());
-            event.setCancelled(true);
+    public void registerListeners() {
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        Listener[] listeners = {
+                new BlockBreakEventListener(plugin),
+                new DrinkEventListener(plugin),
+                new EntityDamageEventListener(plugin),
+                new LMBEventListener(plugin),
+                new ProjectileHitEventListener(plugin),
+        };
+        for (Listener listener: listeners) {
+            pluginManager.registerEvents(listener, plugin);
         }
     }
 }

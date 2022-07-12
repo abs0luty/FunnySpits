@@ -1,7 +1,8 @@
-# DO NOT CHANGE THIS FILE IF YOU DON'T KNOW
-# WHAT YOU ARE DOING
-
 locales:
   - 'en-US'
   - 'ru-RU'
   - 'fr-FR'
+  - 'uk-UA'
+  - 'be-BY'
+  - 'de-DE'
+  - 'pl-PL'

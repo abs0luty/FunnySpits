@@ -1,0 +1,20 @@
+language: 'deutsch'
+author: 'evgen30'
+
+spit_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cDu hast kein Recht zu spucken'
+
+autospit_turned_on_message:
+  '&f[&eFunnySpits&f] &aAutospit inklusive'
+
+autospit_turned_off_message:
+  '&f[&eFunnySpits&f] &aAutospit deaktiviert'
+
+spit_command_cooldown_not_over_message:
+  '&f[&eFunnySpits&f] &cUps, sieht aus, als hättest du noch nicht gesabbert! Warte ab %d sekunden und Sie können wieder spucken'
+
+reload_command_not_enough_permissions_message:
+  '&f[&eFunnySpits&f] &cSie haben keine Berechtigung, das Plugin neu zu laden'
+
+reload_command_success_message:
+  '&f[&eFunnySpits&f] &aPlugin erfolgreich neu geladen'

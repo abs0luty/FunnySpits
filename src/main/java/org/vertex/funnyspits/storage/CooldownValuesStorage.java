@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.logic;
+package org.vertex.funnyspits.storage;
 
 import org.bukkit.entity.Player;
 
@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CooldownValuesStorage {
-    private static List<CooldownValuesStorageColumn> columns = new ArrayList<>();
+    private static List<CooldownValuesStorageColumn> columns =
+            new ArrayList<>();
 
     public CooldownValuesStorage() {}
 
@@ -72,28 +73,26 @@ public class CooldownValuesStorage {
     }
 
     public void setCommandUsageTime(Player player, long time) {
-        if (!playerRegistered(player)) {
-            addPlayerCommandUsageTime(player, time);
-        }
-
         for (CooldownValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
                 column.setLastSpitCommandUsageTime(time);
+                return;
             }
         }
+
+        addPlayerCommandUsageTime(player, time);
     }
 
     public void setBonusWaterSpits(Player player, int amount) {
-        if (!playerRegistered(player)) {
-            addPlayerCommandUsageTimeAndAmount(player,
-                    System.currentTimeMillis() / 1000, amount);
-        }
-
         for (CooldownValuesStorageColumn column: columns) {
             if (column.getPlayer().equals(player)) {
                 column.setBonusWaterSpits(amount);
+                return;
             }
         }
+
+        addPlayerCommandUsageTimeAndAmount(player,
+                System.currentTimeMillis() / 1000, amount);
     }
 
     public void decreaseBonusWaterSpits(Player player) {
