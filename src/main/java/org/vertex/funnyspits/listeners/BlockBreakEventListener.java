@@ -31,7 +31,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.vertex.funnyspits.FunnySpits;
 
 public class BlockBreakEventListener implements Listener {
-    private FunnySpits plugin;
+    private final FunnySpits plugin;
 
     public BlockBreakEventListener(FunnySpits plugin) {
         this.plugin = plugin;

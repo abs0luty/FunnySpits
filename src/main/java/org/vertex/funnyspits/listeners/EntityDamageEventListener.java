@@ -31,7 +31,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.vertex.funnyspits.FunnySpits;
 
 public class EntityDamageEventListener implements Listener {
-    private FunnySpits plugin;
+    private final FunnySpits plugin;
 
     public EntityDamageEventListener(FunnySpits plugin) {
         this.plugin = plugin;

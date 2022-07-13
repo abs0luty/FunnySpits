@@ -22,41 +22,21 @@
  * SOFTWARE.
  */
 
- package org.vertex.funnyspits.storage;
+package org.vertex.funnyspits.spit;
 
-import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Powerable;
 
-import java.util.ArrayList;
-import java.util.List;
+public class BellBlockManager {
+    public void onProjectileHitEvent(Block hitBlock) {
+        BlockData data = hitBlock.getBlockData();
 
-public class SpongeBlockHumidityValuesStorage {
-    private List<SpongeBlockHumidityValuesStorageColumn>
-            columns = new ArrayList<>();
+        if (!(data instanceof Powerable))
+            return;
 
-    public void increaseHumidity(Location location) {
-        for (SpongeBlockHumidityValuesStorageColumn column: columns) {
-            if (column.getBlockLocation().equals(location)) {
-                column.setHumidity(column.getHumidity() + 1);
-                return;
-            }
-        }
-
-        columns.add(new SpongeBlockHumidityValuesStorageColumn(
-                location, 0));
-    }
-
-    public int getHumidity(Location location) {
-        for (SpongeBlockHumidityValuesStorageColumn column: columns) {
-            if (column.getBlockLocation().equals(location)) {
-                return column.getHumidity();
-            }
-        }
-
-        return 0;
-    }
-
-    public void removeBlockAt(Location location) {
-        columns.removeIf(column ->
-                column.getBlockLocation().equals(location));
+        Powerable powerableData = (Powerable) data;
+        powerableData.setPowered(true);
+        hitBlock.setBlockData(powerableData);
     }
 }

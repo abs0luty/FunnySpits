@@ -25,14 +25,16 @@
 package org.vertex.funnyspits;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.vertex.funnyspits.commands.FunnySpitsCommands;
 import org.vertex.funnyspits.commands.SpitCommand;
 import org.vertex.funnyspits.listeners.*;
 import org.vertex.funnyspits.spit.AutoSpitManager;
+import org.vertex.funnyspits.spit.BellBlockManager;
+import org.vertex.funnyspits.spit.CampFireBlockManager;
 import org.vertex.funnyspits.spit.PotionEffectsManager;
 import org.vertex.funnyspits.spit.SpitManager;
+import org.vertex.funnyspits.spit.SpongeBlockManager;
 import org.vertex.funnyspits.storage.AutoSpitValuesStorage;
 import org.vertex.funnyspits.storage.CooldownValuesStorage;
 import org.vertex.funnyspits.resource.LocaleManager;
@@ -50,6 +52,9 @@ public final class FunnySpits extends JavaPlugin {
     private AutoSpitManager autoSpitManager;
     private SpitManager spitsManager;
     private PotionEffectsManager potionEffectsManager;
+    private SpongeBlockManager spongeBlockManager;
+    private CampFireBlockManager campFireBlockManager;
+    private BellBlockManager bellBlockManager;
 
     public FileConfiguration getConfiguration() {
         return configuration;
@@ -91,6 +96,18 @@ public final class FunnySpits extends JavaPlugin {
         return potionEffectsManager;
     }
 
+    public SpongeBlockManager getSpongeBlockManager() {
+        return spongeBlockManager;
+    }
+
+    public CampFireBlockManager getCampFireBlockManager() {
+        return campFireBlockManager;
+    }
+
+    public BellBlockManager getBellBlockManager() {
+        return bellBlockManager;
+    }
+
     public void setConfiguration(FileConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -106,12 +123,11 @@ public final class FunnySpits extends JavaPlugin {
                 getLogger().info("\u001B[32mPlugin is up to date!\u001B[37m");
             } else {
                 getLogger().info(String.format("\u001B[31mThere is a new update available (%s). " +
-                                "It is recommended to download it! Current plugin version: %s\u001B[37m",
+                        "It is recommended to download it! Current plugin version: %s\u001B[37m",
                         version,
                         this.getDescription().getVersion()));
             }
         });
-
 
         saveDefaultConfig();
 
@@ -130,10 +146,14 @@ public final class FunnySpits extends JavaPlugin {
 
         potionEffectsManager = new PotionEffectsManager();
 
+        configuration = getConfig();
+
+        spongeBlockManager = new SpongeBlockManager(this);
+        campFireBlockManager = new CampFireBlockManager();
+        bellBlockManager = new BellBlockManager();
+
         ListenersManager listenersManager = new ListenersManager(this);
         listenersManager.registerListeners();
-
-        configuration = getConfig();
 
         int spitIntensity = configuration.getInt("spit_intensity");
         if (spitIntensity < 1 || spitIntensity > 10) {
@@ -145,5 +165,6 @@ public final class FunnySpits extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() { }
+    public void onDisable() {
+    }
 }

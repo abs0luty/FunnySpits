@@ -24,14 +24,8 @@
 
 package org.vertex.funnyspits.listeners;
 
-import net.minecraft.core.BlockPosition;
-import net.minecraft.network.protocol.game.PacketPlayOutBlockAction;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,7 +42,8 @@ public class ProjectileHitEventListener implements Listener {
 
     @EventHandler
     public void onProjectileHitEvent(ProjectileHitEvent event) {
-        if (!(event.getEntity() instanceof LlamaSpit)) return;
+        if (!(event.getEntity() instanceof LlamaSpit))
+            return;
 
         ProjectileSource shooter = event.getEntity().getShooter();
         if (shooter instanceof Player) {
@@ -56,27 +51,26 @@ public class ProjectileHitEventListener implements Listener {
 
             Block block = event.getHitBlock();
             if (block != null) {
-                if (block.getType() == Material.SPONGE) {
-                    plugin.getSpongeBlockHumidityValuesStorage().increaseHumidity(
-                            block.getLocation());
-                    int humidity = plugin.getSpongeBlockHumidityValuesStorage().getHumidity(
-                                    block.getLocation());
-                    if (humidity >= plugin.getConfiguration()
-                            .getInt("sponge_blocks_spits_required")) {
-                        block.setType(Material.WET_SPONGE);
-                    }
-                }
+                if (block.getType() == Material.SPONGE)
+                    plugin.getSpongeBlockManager().onProjectileHitEvent(
+                            block);
+                else if (block.getType() == Material.CAMPFIRE)
+                    plugin.getCampFireBlockManager().onProjectileHitEvent(
+                            block);
+                else if (block.getType() == Material.BELL)
+                    plugin.getBellBlockManager().onProjectileHitEvent(
+                            block);
             }
-
 
             Entity entity = event.getHitEntity();
 
-            if (!(entity instanceof LivingEntity)) return;
+            if (!(entity instanceof LivingEntity))
+                return;
 
             LivingEntity livingEntity = (LivingEntity) entity;
 
-            if (livingEntity instanceof Player && shooter ==
-                    (Player) livingEntity) return;
+            if (livingEntity instanceof Player && shooter == (Player) livingEntity)
+                return;
 
             double damage = plugin.getConfiguration().getDouble(
                     "spit_damage");

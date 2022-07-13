@@ -1,5 +1,7 @@
+# The locale file name
 locale: 'en-US'
 
+# Permission for using "/spit" command
 spit_command_permission: 'funnyspits.use'
 
 # Set to true if you want sound of llama spit to be played near the location
@@ -21,13 +23,27 @@ spit_kill: false
 # Spit command cooldown (if value is zero, cooldown is cancelled).
 spit_command_cooldown: 5
 
+# Amount of constant spits available to the person after he drank water
 bonus_water_spits: 5
 
+# Will spits interact with sponge blocks making them wet?
 sponge_blocks_interaction_enabled: true
 
+# Amount of spits, needed for making sponge block wet
+# Use the formula to not get confused:
+# (spit_intensity * amount of spits for sponge block to completely turn into
+# the wet sponge block)
 sponge_blocks_spits_required: 39
 
+# Will automatic spits be enabled?
+# (command: /funnyspits autospit on/off)
 autospit_enabled: true
+
+# Will automatic spits be enabled on left mouse button?
+autospit_lmb_enabled: true
+
+# Will automatic spits be enabled on right mouse button?
+autospit_rmb_enabled: true
 
 # Permission for that player to be able to run plugin config reload command.
 reload_command_permission: 'funnyspits.reload'

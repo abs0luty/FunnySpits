@@ -22,41 +22,29 @@
  * SOFTWARE.
  */
 
- package org.vertex.funnyspits.storage;
+package org.vertex.funnyspits.spit;
 
-import org.bukkit.Location;
+import org.vertex.funnyspits.FunnySpits;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 
-import java.util.ArrayList;
-import java.util.List;
+public class SpongeBlockManager {
+    private FunnySpits plugin;
 
-public class SpongeBlockHumidityValuesStorage {
-    private List<SpongeBlockHumidityValuesStorageColumn>
-            columns = new ArrayList<>();
-
-    public void increaseHumidity(Location location) {
-        for (SpongeBlockHumidityValuesStorageColumn column: columns) {
-            if (column.getBlockLocation().equals(location)) {
-                column.setHumidity(column.getHumidity() + 1);
-                return;
-            }
-        }
-
-        columns.add(new SpongeBlockHumidityValuesStorageColumn(
-                location, 0));
+    public SpongeBlockManager(FunnySpits plugin) {
+        this.plugin = plugin;
     }
 
-    public int getHumidity(Location location) {
-        for (SpongeBlockHumidityValuesStorageColumn column: columns) {
-            if (column.getBlockLocation().equals(location)) {
-                return column.getHumidity();
-            }
+    public void onProjectileHitEvent(Block hitBlock) {
+        plugin.getSpongeBlockHumidityValuesStorage().increaseHumidity(
+                hitBlock.getLocation());
+
+        int humidity = plugin.getSpongeBlockHumidityValuesStorage()
+                .getHumidity(hitBlock.getLocation());
+
+        if (humidity >= plugin.getConfiguration()
+                .getInt("sponge_blocks_spits_required")) {
+            hitBlock.setType(Material.WET_SPONGE);
         }
-
-        return 0;
-    }
-
-    public void removeBlockAt(Location location) {
-        columns.removeIf(column ->
-                column.getBlockLocation().equals(location));
     }
 }

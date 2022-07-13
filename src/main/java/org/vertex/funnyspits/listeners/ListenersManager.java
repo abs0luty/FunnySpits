@@ -25,13 +25,12 @@
 package org.vertex.funnyspits.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.vertex.funnyspits.FunnySpits;
 
 public class ListenersManager {
-    private FunnySpits plugin;
+    private final FunnySpits plugin;
 
     public ListenersManager(FunnySpits plugin) {
         this.plugin = plugin;
@@ -43,10 +42,10 @@ public class ListenersManager {
                 new BlockBreakEventListener(plugin),
                 new DrinkEventListener(plugin),
                 new EntityDamageEventListener(plugin),
-                new LMBEventListener(plugin),
                 new ProjectileHitEventListener(plugin),
+                new LMBEventListener(plugin)
         };
-        for (Listener listener: listeners) {
+        for (Listener listener : listeners) {
             pluginManager.registerEvents(listener, plugin);
         }
     }
