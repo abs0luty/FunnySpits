@@ -68,18 +68,23 @@ public class ProjectileHitEventListener implements Listener {
                 }
             }
 
-            LivingEntity entity = (LivingEntity) event.getHitEntity();
-            if (entity == null) return;
 
-            if (entity instanceof Player && shooter == (Player) entity) return;
+            Entity entity = event.getHitEntity();
+
+            if (!(entity instanceof LivingEntity)) return;
+
+            LivingEntity livingEntity = (LivingEntity) entity;
+
+            if (livingEntity instanceof Player && shooter ==
+                    (Player) livingEntity) return;
 
             double damage = plugin.getConfiguration().getDouble(
                     "spit_damage");
             if (damage != 0) {
-                entity.damage(damage);
+                livingEntity.damage(damage);
             } else {
                 if (plugin.getConfiguration().getBoolean("spit_kill")) {
-                    entity.setHealth(0);
+                    livingEntity.setHealth(0);
                 }
             }
         }
