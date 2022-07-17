@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
- package org.vertex.funnyspits.resource;
+package org.vertex.funnyspits.resource;
 
 import org.vertex.funnyspits.FunnySpits;
 
@@ -39,9 +39,8 @@ public class ResourceManager {
         try {
             new File(plugin.getDataFolder(), path);
             plugin.saveResource(path,
-                    false);
-        }
-        catch (Exception ex) {
+                    true);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -53,8 +52,7 @@ public class ResourceManager {
                 plugin.saveResource(path,
                         false);
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

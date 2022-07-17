@@ -24,14 +24,22 @@
 
 package org.vertex.funnyspits.listeners;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftVillager;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.vertex.funnyspits.FunnySpits;
+import org.vertex.funnyspits.spit.ProjectileHitEventBlockManager;
 
 public class ProjectileHitEventListener implements Listener {
     private final FunnySpits plugin;
@@ -40,8 +48,10 @@ public class ProjectileHitEventListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onProjectileHitEvent(ProjectileHitEvent event) {
+        Bukkit.getLogger().info(event.toString());
+
         if (!(event.getEntity() instanceof LlamaSpit))
             return;
 
@@ -51,15 +61,22 @@ public class ProjectileHitEventListener implements Listener {
 
             Block block = event.getHitBlock();
             if (block != null) {
-                if (block.getType() == Material.SPONGE)
-                    plugin.getSpongeBlockManager().onProjectileHitEvent(
-                            block);
-                else if (block.getType() == Material.CAMPFIRE)
-                    plugin.getCampFireBlockManager().onProjectileHitEvent(
-                            block);
-                else if (block.getType() == Material.BELL)
-                    plugin.getBellBlockManager().onProjectileHitEvent(
-                            block);
+                HashMap<Material, ProjectileHitEventBlockManager> blockManagers = new HashMap<>();
+                if (plugin.getConfiguration().getBoolean("campfire_interaction_enabled"))
+                    blockManagers.put(Material.CAMPFIRE, plugin.getCampFireBlockManager());
+
+                if (plugin.getConfiguration().getBoolean("fire_interaction_enabled"))
+                    blockManagers.put(Material.FIRE, plugin.getFireBlockManager());
+
+                if (plugin.getConfiguration().getBoolean("sponge_blocks_interaction_enabled"))
+                    blockManagers.put(Material.SPONGE, plugin.getSpongeBlockManager());
+
+                for (Map.Entry<Material, ProjectileHitEventBlockManager> entry : blockManagers.entrySet()) {
+                    if (entry.getKey() == block.getType()) {
+                        entry.getValue().onProjectileHit(block);
+                        break;
+                    }
+                }
             }
 
             Entity entity = event.getHitEntity();
@@ -71,6 +88,15 @@ public class ProjectileHitEventListener implements Listener {
 
             if (livingEntity instanceof Player && shooter == (Player) livingEntity)
                 return;
+
+            if (livingEntity instanceof Player)
+                plugin.getPotionEffectsManager().giveEffects((Player) shooter, (Player) livingEntity);
+
+            if (livingEntity instanceof Villager) {
+                Bukkit.getLogger().info("Villager hit");
+
+                ((Villager) livingEntity).shakeHead();
+            }
 
             double damage = plugin.getConfiguration().getDouble(
                     "spit_damage");

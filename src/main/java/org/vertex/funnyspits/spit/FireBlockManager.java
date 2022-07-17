@@ -24,20 +24,14 @@
 
 package org.vertex.funnyspits.spit;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Powerable;
 
-public class BellBlockManager implements ProjectileHitEventBlockManager {
+public class FireBlockManager implements ProjectileHitEventBlockManager {
     @Override
-    public void onProjectileHit(Block hitBlock) {
-        BlockData data = hitBlock.getBlockData();
-
-        if (!(data instanceof Powerable))
-            return;
-
-        Powerable powerableData = (Powerable) data;
-        powerableData.setPowered(true);
-        hitBlock.setBlockData(powerableData);
+    public void onProjectileHit(Block block) {
+        block.setType(Material.AIR);
+        Bukkit.getLogger().info("ok fire");
     }
 }

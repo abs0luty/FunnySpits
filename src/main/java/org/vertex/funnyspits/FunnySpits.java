@@ -32,6 +32,7 @@ import org.vertex.funnyspits.listeners.*;
 import org.vertex.funnyspits.spit.AutoSpitManager;
 import org.vertex.funnyspits.spit.BellBlockManager;
 import org.vertex.funnyspits.spit.CampFireBlockManager;
+import org.vertex.funnyspits.spit.FireBlockManager;
 import org.vertex.funnyspits.spit.PotionEffectsManager;
 import org.vertex.funnyspits.spit.SpitManager;
 import org.vertex.funnyspits.spit.SpongeBlockManager;
@@ -55,6 +56,7 @@ public final class FunnySpits extends JavaPlugin {
     private SpongeBlockManager spongeBlockManager;
     private CampFireBlockManager campFireBlockManager;
     private BellBlockManager bellBlockManager;
+    private FireBlockManager fireBlockManager;
 
     public FileConfiguration getConfiguration() {
         return configuration;
@@ -108,6 +110,10 @@ public final class FunnySpits extends JavaPlugin {
         return bellBlockManager;
     }
 
+    public FireBlockManager getFireBlockManager() {
+        return fireBlockManager;
+    }
+
     public void setConfiguration(FileConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -129,6 +135,13 @@ public final class FunnySpits extends JavaPlugin {
             }
         });
 
+        configuration = getConfig();
+
+        resourceManager = new ResourceManager(this);
+
+        localeManager = new LocaleManager(this);
+        localeManager.loadLocaleConfiguration();
+
         saveDefaultConfig();
 
         autoSpitManager = new AutoSpitManager(this);
@@ -137,20 +150,14 @@ public final class FunnySpits extends JavaPlugin {
         cooldownValuesStorage = new CooldownValuesStorage();
         spongeBlockHumidityValuesStorage = new SpongeBlockHumidityValuesStorage();
 
-        resourceManager = new ResourceManager(this);
-
-        localeManager = new LocaleManager(this);
-        localeManager.loadLocaleConfiguration();
-
         spitsManager = new SpitManager(this);
 
-        potionEffectsManager = new PotionEffectsManager();
-
-        configuration = getConfig();
+        potionEffectsManager = new PotionEffectsManager(this);
 
         spongeBlockManager = new SpongeBlockManager(this);
         campFireBlockManager = new CampFireBlockManager();
         bellBlockManager = new BellBlockManager();
+        fireBlockManager = new FireBlockManager();
 
         ListenersManager listenersManager = new ListenersManager(this);
         listenersManager.registerListeners();

@@ -30,21 +30,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoSpitValuesStorage {
-    private static List<AutoSpitValuesStorageColumn> columns =
-            new ArrayList<>();
+    private static List<AutoSpitValuesStorageColumn> columns = new ArrayList<>();
 
-    public AutoSpitValuesStorage() {}
+    public AutoSpitValuesStorage() {
+    }
 
     public boolean playerRegistered(Player player) {
-        for (AutoSpitValuesStorageColumn column: columns) {
-            if (column.getPlayer().equals(player)) return true;
+        for (AutoSpitValuesStorageColumn column : columns) {
+            if (column.getPlayer().equals(player))
+                return true;
         }
 
         return false;
     }
 
     public boolean getAutoSpitEnabled(Player player) {
-        for (AutoSpitValuesStorageColumn column: columns) {
+        for (AutoSpitValuesStorageColumn column : columns) {
             if (column.getPlayer().equals(player)) {
                 return column.getEnabled();
             }
@@ -58,7 +59,7 @@ public class AutoSpitValuesStorage {
     }
 
     public void setAutoSpitAbility(Player player, boolean enabled) {
-        for (AutoSpitValuesStorageColumn column: columns) {
+        for (AutoSpitValuesStorageColumn column : columns) {
             if (column.getPlayer().equals(player)) {
                 column.setEnabled(enabled);
                 return;

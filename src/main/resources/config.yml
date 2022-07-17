@@ -1,6 +1,8 @@
 # The locale file name
 locale: 'en-US'
 
+worlds_prohibited: []
+
 # Permission for using "/spit" command
 spit_command_permission: 'funnyspits.use'
 
@@ -35,15 +37,17 @@ sponge_blocks_interaction_enabled: true
 # the wet sponge block)
 sponge_blocks_spits_required: 39
 
+potion_effects_transmission_enabled: true
+
+potion_effects_transmission_percentage: 20
+
+fire_interaction_enabled: true
+
+campfire_interaction_enabled: true
+
 # Will automatic spits be enabled?
 # (command: /funnyspits autospit on/off)
 autospit_enabled: true
-
-# Will automatic spits be enabled on left mouse button?
-autospit_lmb_enabled: true
-
-# Will automatic spits be enabled on right mouse button?
-autospit_rmb_enabled: true
 
 # Permission for that player to be able to run plugin config reload command.
 reload_command_permission: 'funnyspits.reload'

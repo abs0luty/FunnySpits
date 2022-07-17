@@ -24,7 +24,9 @@
 
 package org.vertex.funnyspits.spit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
@@ -38,17 +40,21 @@ public class SpitManager {
     }
 
     public boolean spit(Player player) {
+        if (plugin.getConfiguration().getStringList("worlds_prohibited").contains(
+                player.getWorld().getName()))
+            return false;
+
         long cooldownTime = plugin.getConfiguration().getLong(
                 "spit_command_cooldown");
         int bonusSpits;
         if (!plugin.getCooldownValuesStorage().playerRegistered(player))
             bonusSpits = 0;
-        else bonusSpits = plugin.getCooldownValuesStorage()
-                .getPlayerBonusWaterSpits(player);
+        else
+            bonusSpits = plugin.getCooldownValuesStorage()
+                    .getPlayerBonusWaterSpits(player);
 
         if (!player.hasPermission(
-                plugin.getConfiguration().getString("spit_command_permission")
-        )) {
+                plugin.getConfiguration().getString("spit_command_permission"))) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.getMessagesConfiguration().getString(
                             "spit_command_not_enough_permissions_message")));
@@ -61,13 +67,13 @@ public class SpitManager {
                 && cooldownTime != 0) {
             long lastUsageTime = plugin.getCooldownValuesStorage()
                     .getPlayerCommandUsageTime(
-                    player);
+                            player);
             long timeSinceLastUsageTime = (System.currentTimeMillis() / 1000)
                     - lastUsageTime;
             if (timeSinceLastUsageTime < cooldownTime) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         String.format(plugin.getMessagesConfiguration().getString(
-                        "spit_command_cooldown_not_over_message"),
+                                "spit_command_cooldown_not_over_message"),
                                 cooldownTime - timeSinceLastUsageTime)));
                 return false;
             }

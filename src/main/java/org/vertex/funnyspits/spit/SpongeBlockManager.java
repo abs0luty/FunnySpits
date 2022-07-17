@@ -28,14 +28,15 @@ import org.vertex.funnyspits.FunnySpits;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class SpongeBlockManager {
+public class SpongeBlockManager implements ProjectileHitEventBlockManager {
     private FunnySpits plugin;
 
     public SpongeBlockManager(FunnySpits plugin) {
         this.plugin = plugin;
     }
 
-    public void onProjectileHitEvent(Block hitBlock) {
+    @Override
+    public void onProjectileHit(Block hitBlock) {
         plugin.getSpongeBlockHumidityValuesStorage().increaseHumidity(
                 hitBlock.getLocation());
 

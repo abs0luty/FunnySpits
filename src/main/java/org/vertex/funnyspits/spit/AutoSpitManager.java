@@ -36,23 +36,25 @@ public class AutoSpitManager {
         this.plugin = plugin;
     }
 
-    public boolean turnAutoSpitOn(Player player) {
-        plugin.getAutoSpitValuesStorage().setAutoSpitEnabled(player);
+    public boolean setAutoSpitEnabledValue(Player player, boolean value) {
+        if (plugin.getConfiguration().getStringList("worlds_prohibited").contains(
+                player.getWorld().getName()))
+            return false;
+
+        plugin.getAutoSpitValuesStorage().setAutoSpitAbility(player, value);
         player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                 plugin.getMessagesConfiguration().getString(
-                "autospit_turned_on_message")));
+                        String.format("autospit_turned_%s_message", value ? "on" : "off"))));
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
                 1f, 1f);
         return true;
     }
 
+    public boolean turnAutoSpitOn(Player player) {
+        return setAutoSpitEnabledValue(player, true);
+    }
+
     public boolean turnAutoSpitOff(Player player) {
-        plugin.getAutoSpitValuesStorage().setAutoSpitDisabled(player);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                plugin.getMessagesConfiguration().getString(
-                "autospit_turned_off_message")));
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE,
-                1f, 1f);
-        return true;
+        return setAutoSpitEnabledValue(player, false);
     }
 }

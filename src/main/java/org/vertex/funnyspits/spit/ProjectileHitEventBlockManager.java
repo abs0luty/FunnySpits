@@ -22,15 +22,16 @@
  * SOFTWARE.
  */
 
-package org.vertex.funnyspits.resource;
+package org.vertex.funnyspits.spit;
 
-import org.vertex.funnyspits.FunnySpits;
+import org.bukkit.block.Block;
 
-public class ConfigChecker {
-    private FunnySpits plugin;
-
-    public ConfigChecker(FunnySpits plugin) {
-        this.plugin = plugin;
-    }
-
+public interface ProjectileHitEventBlockManager {
+    /**
+     * Called when a projectile hits a block in ProjectileHitEvent.
+     * 
+     * @param hitBlock The block that was hit (can be checked to a specific one
+     *                 already).
+     */
+    public void onProjectileHit(Block hitBlock);
 }

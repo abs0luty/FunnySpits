@@ -28,8 +28,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Campfire;
 import org.bukkit.block.data.BlockData;
 
-public class CampFireBlockManager {
-    public void onProjectileHitEvent(Block block) {
+public class CampFireBlockManager implements ProjectileHitEventBlockManager {
+    @Override
+    public void onProjectileHit(Block block) {
         BlockData data = block.getBlockData();
 
         if (!(data instanceof Campfire))

@@ -24,6 +24,7 @@
 
 package org.vertex.funnyspits.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -42,20 +43,22 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command,
-                             String label, String[] args) {
+            String label, String[] args) {
         if (args.length == 1) {
             if (args[0].equals("spit")) {
-                if (!(sender instanceof Player)) return false;
+                if (!(sender instanceof Player))
+                    return false;
 
                 return plugin.getSpitsManager().spit((Player) sender);
             } else if (args[0].equals("reload")) {
                 boolean ableToReload = false;
-                if (sender instanceof ConsoleCommandSender) ableToReload = true;
+                if (sender instanceof ConsoleCommandSender)
+                    ableToReload = true;
                 else if (sender instanceof Player) {
                     if (sender.hasPermission(
                             plugin.getConfiguration()
-                                    .getString("reload_command_permission")
-                    )) ableToReload = true;
+                                    .getString("reload_command_permission")))
+                        ableToReload = true;
                 }
 
                 if (!ableToReload) {
@@ -64,8 +67,7 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                                 ChatColor.translateAlternateColorCodes('&',
                                         plugin.getMessagesConfiguration()
                                                 .getString(
-                                                "reload_command_not_enough_permissions_message"))
-                        );
+                                                        "reload_command_not_enough_permissions_message")));
                     }
                     return false;
                 } else {
@@ -79,21 +81,23 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                     sender.sendMessage(
                             ChatColor.translateAlternateColorCodes('&',
                                     plugin.getMessagesConfiguration().getString(
-                                            "reload_command_success_message"))
-                    );
+                                            "reload_command_success_message")));
                 }
                 return true;
             }
         } else if (args.length == 2) {
             if (args[0].equals("autospit") && plugin.getConfiguration()
                     .getBoolean("autospit_enabled")) {
-                if (!(sender instanceof Player)) return false;
+                if (!(sender instanceof Player))
+                    return false;
 
                 Player player = (Player) sender;
-                if (args[1].equals("on")) return plugin.getAutoSpitManager()
-                        .turnAutoSpitOn(player);
-                if (args[1].equals("off")) return plugin.getAutoSpitManager()
-                        .turnAutoSpitOff(player);
+                if (args[1].equals("on"))
+                    return plugin.getAutoSpitManager()
+                            .turnAutoSpitOn(player);
+                if (args[1].equals("off"))
+                    return plugin.getAutoSpitManager()
+                            .turnAutoSpitOff(player);
             }
         }
 
@@ -102,10 +106,10 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command,
-                                      String label, String[] args) {
+            String label, String[] args) {
         List<String> completions = new ArrayList<>();
-        if (args.length == 1)
-        {
+
+        if (args.length == 1) {
             ArrayList<String> completionsList = new ArrayList<>();
 
             if (sender instanceof Player) {
@@ -136,7 +140,7 @@ public class FunnySpitsCommands implements CommandExecutor, TabCompleter {
                 "autospit_enabled")) {
             StringUtil.copyPartialMatches(
                     args[1], Arrays.asList(
-                            new String[]{"on", "off"}),
+                            new String[] { "on", "off" }),
                     completions);
             Collections.sort(completions);
             return completions;
