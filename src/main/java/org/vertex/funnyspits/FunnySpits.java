@@ -162,11 +162,6 @@ public final class FunnySpits extends JavaPlugin {
         ListenersManager listenersManager = new ListenersManager(this);
         listenersManager.registerListeners();
 
-        int spitIntensity = configuration.getInt("spit_intensity");
-        if (spitIntensity < 1 || spitIntensity > 10) {
-            getLogger().severe("spit_intensity value in config.yml must be in the interval of 1 to 10");
-        }
-
         new FunnySpitsCommands(this);
         new SpitCommand(this);
     }
