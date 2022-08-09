@@ -32,6 +32,5 @@ public class FireBlockManager implements ProjectileHitEventBlockManager {
     @Override
     public void onProjectileHit(Block block) {
         block.setType(Material.AIR);
-        Bukkit.getLogger().info("ok fire");
     }
 }
